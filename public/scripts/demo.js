@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoCorrectBtn.addEventListener('click', () => {
       const correctedData = JSON.parse(originalEstimate.textContent);
 
-      // Apply corrections
+      // Apply mock corrections
       correctedData.operations.push({ name: 'Blend Adjacent Panel', hours: 1.5 });
       correctedData.parts[0].type = 'Aftermarket';
       correctedData.parts[0].cost = 350.00;
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Display corrected estimate
       correctedEstimate.textContent = JSON.stringify(correctedData, null, 2);
 
-      // Display recommendations
+      // Display mock recommendations
       const recommendations = [
         'Use aftermarket parts to reduce costs',
         'Add blend operation for color match'
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .map(rec => `<li>${rec}</li>`)
         .join('');
 
-      // Update metrics
+      // Update mock metrics
       approvalLikelihood.textContent = '85%';
       complianceScore.textContent = '95%';
     });
