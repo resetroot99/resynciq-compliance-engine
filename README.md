@@ -1,70 +1,107 @@
-# ReSyncIQ Compliance Engine
+# 🚗 ReSyncIQ Compliance Engine
 
-⚠️ **PROJECT ARCHIVED** ⚠️
+## 🌟 Revolutionizing DRP Program Management with AI
 
-This project is no longer actively maintained. For support or refund inquiries:
+### 📚 About the DRP Program and ARX
 
-**Contact:**
-- Email: team@thecrashco.com
-- Phone: 626-474-2012
-
-**Address:**
-The Crash Co.
-2020 S Brea Canyon Rd
-Diamond Bar, CA 91765
-USA
-
----
-
-## Historical Documentation
-
-The documentation below is preserved for reference purposes but is no longer actively maintained.
-
-## Revolutionizing DRP Program Management with AI
-
-### About the DRP Program and ARX
+![DRP Program](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/drp-program.png)
 
 The Direct Repair Program (DRP) is a network of collision repair shops that work directly with insurance companies to streamline the claims process. ARX (Automated Repair eXchange) is a critical component of modern DRP programs, enabling:
 
-- Real-time data exchange between shops and insurers
-- Automated compliance checks
-- Streamlined estimate approvals
-- Enhanced quality control
+- 🔄 Real-time data exchange between shops and insurers
+- 🤖 Automated compliance checks
+- ⚡ Streamlined estimate approvals
+- 🎯 Enhanced quality control
 
-### How ReSyncIQ Enhances DRP Performance
+## 🎥 Live Demo
 
-Our AI-powered compliance engine helps shops excel in DRP programs by:
-
-1. **Automated Compliance Validation**
-   - Real-time validation against insurer guidelines
-   - Automated correction suggestions
-   - Detailed compliance reports
-
-2. **ARX Integration**
-   - Seamless data exchange with insurer systems
-   - Automated estimate submission and tracking
-   - Real-time status updates
-
-3. **Performance Analytics**
-   - Key performance indicators (KPIs) tracking
-   - Turnaround time optimization
-   - Quality metrics monitoring
-
-4. **AI-Powered Estimate Review**
-   - Intelligent damage assessment
-   - Automated parts and labor validation
-   - Predictive repair cost analysis
-
-5. **Shop Performance Optimization**
-   - Workflow efficiency analysis
-   - Resource allocation recommendations
-   - Profitability insights
-
-## Live Demo
+![Demo Screenshot](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/screenshots/dashboard.png)
 
 Test the application live: [ReSyncIQ Compliance Engine](https://resetroot99.github.io/resynciq-compliance-engine)
 
-## Key Features
+## 🚀 Quick Start
+
+### 📋 Prerequisites
+
+![Tech Stack](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/tech-stack.png)
+
+- 🟢 Node.js 18+
+- 🐳 Docker and Docker Compose
+- 🐘 PostgreSQL 14+
+- 🔴 Redis (optional, for caching)
+
+### 🛠️ Development Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/resetroot99/resynciq-compliance-engine.git
+cd resynciq-compliance-engine
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+4. Start the development environment:
+```bash
+docker-compose up -d
+```
+
+5. Run database migrations:
+```bash
+npm run prisma:migrate
+```
+
+6. Start the development server:
+```bash
+npm run dev
+```
+
+### 🚀 Production Deployment
+
+1. Build the application:
+```bash
+npm run build
+```
+
+2. Start the production server:
+```bash
+npm start
+```
+
+## 🤝 Contributing
+
+![Contribution Flow](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/contribution-flow.png)
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📜 License
+
+© 2024 ReSyncIQ. All rights reserved.
+
+## 🆘 Support
+
+![Support Channels](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/support-channels.png)
+
+- 📚 Documentation: [ReSyncIQ Docs](https://docs.resynciq.com)
+- 📧 Email: support@resynciq.com
+- 🐛 Issues: [GitHub Issues](https://github.com/resetroot99/resynciq-compliance-engine/issues)
+
+## ✨ Key Features
+
+![Feature Showcase](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/feature-showcase.png)
 
 - 🤖 AI-Powered Analysis
 - 📊 Real-time Validation
@@ -73,28 +110,32 @@ Test the application live: [ReSyncIQ Compliance Engine](https://resetroot99.gith
 - 📱 Mobile-Friendly Interface
 - 🔒 Enterprise-Grade Security
 
+## 📊 Case Studies
 
-## Case Studies
+### 📈 Case Study 1: Improved Efficiency
 
-### Case Study 1: Improved Efficiency
+![Efficiency Graph](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/efficiency-graph.png)
+
 **Challenge:** A mid-sized collision repair shop was struggling with long estimate approval times (average 3 days) and low first-time approval rates (65%).
 
 **Solution:** Implemented ReSyncIQ's AI-powered compliance engine and ARX integration.
 
 **Results:**
-- Estimate approval time reduced to 1.5 hours
-- First-time approval rate increased to 92%
-- Monthly revenue increased by 25%
+- ⏱️ Estimate approval time reduced to 1.5 hours
+- ✅ First-time approval rate increased to 92%
+- 💰 Monthly revenue increased by 25%
 
-### Case Study 2: Enhanced Compliance
+### 🎯 Case Study 2: Enhanced Compliance
+
+![Compliance Chart](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/images/compliance-chart.png)
+
 **Challenge:** A large multi-location repair chain needed to maintain consistent compliance across all locations.
 
 **Solution:** Deployed ReSyncIQ's centralized compliance management system.
 
 **Results:**
-- Compliance score increased from 78% to 95%
-- Reduced compliance-related rework by 60%
-- Improved insurer relationships and DRP status
+- 📈 Compliance score increased from 78% to 95%
+- 🔄 Reduced compliance-related rework by 60%
 
 ## Pricing
 
@@ -232,80 +273,6 @@ Test the application live: [ReSyncIQ Compliance Engine](https://resetroot99.gith
 - **Average Estimate Turnaround Time**: < 2 hours
 - **Compliance Score**: 90%+
 - **Customer Satisfaction**: 4.8/5.0
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- Docker and Docker Compose
-- PostgreSQL 14+
-- Redis (optional, for caching)
-
-### Development Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/resetroot99/resynciq-compliance-engine.git
-cd resynciq-compliance-engine
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
-
-4. Start the development environment:
-```bash
-docker-compose up -d
-```
-
-5. Run database migrations:
-```bash
-npm run prisma:migrate
-```
-
-6. Start the development server:
-```bash
-npm run dev
-```
-
-### Production Deployment
-
-1. Build the application:
-```bash
-npm run build
-```
-
-2. Start the production server:
-```bash
-npm start
-```
-
-## Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-© 2024 ReSyncIQ. All rights reserved.
-
-## Support
-
-- Documentation: [ReSyncIQ Docs](https://docs.resynciq.com)
-- Email: support@resynciq.com
-- Issues: [GitHub Issues](https://github.com/resetroot99/resynciq-compliance-engine/issues)
 
 ## Advanced Features
 
