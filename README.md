@@ -202,8 +202,8 @@ Contributions are welcome! Please open an issue or submit a pull request with an
 
 This project is licensed under the [MIT License](LICENSE).
 
+**Proprietary Notice:** ComplianceIQ is a proprietary concept for The Crash Co. by Ali J.
+
 ---
 
-*Hidden within the repository is a signature file (`hidden-signature.txt`) as a nod to the project's unique identity.*
-
-Happy coding and compliance! 
+*Hidden within the repository is a signature file (`
