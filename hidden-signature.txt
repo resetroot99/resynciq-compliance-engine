@@ -5,8 +5,8 @@
    Version 1.0.0
    March 2024
    
-   GitHub: https://github.com/alijakvani/resynciq-compliance-engine
-   Live: https://alijakvani.github.io/resynciq-compliance-engine
+   GitHub: https://github.com/resetroot99/resynciq-compliance-engine
+   Live: https://resetroot99.github.io/resynciq-compliance-engine
    
    Build: ${BUILD_NUMBER}
    Last Updated: ${BUILD_TIME}

@@ -54,7 +54,7 @@ AI-powered compliance validation engine for collision repair estimates.
 - Feedback System
 
 ## Live Demo
-Visit [https://alijakvani.github.io/resynciq-compliance-engine](https://alijakvani.github.io/resynciq-compliance-engine)
+Visit [https://resetroot99.github.io/resynciq-compliance-engine](https://resetroot99.github.io/resynciq-compliance-engine)
 
 ## Features
 - 🤖 AI-Powered Analysis
@@ -65,15 +65,15 @@ Visit [https://alijakvani.github.io/resynciq-compliance-engine](https://alijakva
 - 🔒 Enterprise-Grade Security
 
 ## Quick Links
-- [Dashboard](https://alijakvani.github.io/resynciq-compliance-engine/dashboard)
-- [Documentation](https://alijakvani.github.io/resynciq-compliance-engine/docs)
-- [API Reference](https://alijakvani.github.io/resynciq-compliance-engine/api)
+- [Dashboard](https://resetroot99.github.io/resynciq-compliance-engine/dashboard)
+- [Documentation](https://resetroot99.github.io/resynciq-compliance-engine/docs)
+- [API Reference](https://resetroot99.github.io/resynciq-compliance-engine/api)
 
 ## Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/alijakvani/resynciq-compliance-engine.git
+git clone https://github.com/resetroot99/resynciq-compliance-engine.git
 
 # Navigate to project
 cd resynciq-compliance-engine

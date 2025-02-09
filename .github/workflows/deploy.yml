@@ -29,7 +29,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     env:
-      SITE_URL: https://YOUR_USERNAME.github.io/resynciq-compliance-engine
+      SITE_URL: https://resetroot99.github.io/resynciq-compliance-engine
       NODE_ENV: production
       AI_MODEL_VERSION: ${{ github.sha }}
       
