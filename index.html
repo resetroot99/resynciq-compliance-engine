@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComplianceIQ</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/demo.css">
     <script>
         // Check AI service status
         async function checkAIService() {
@@ -45,11 +45,42 @@
     </script>
 </head>
 <body>
-    <div id="root"></div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/demo.html">Demo</a>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>ComplianceIQ</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#compliance-validation">Compliance Validation</a></li>
+            <li><a href="#risk-assessment">Risk Assessment</a></li>
+            <li><a href="#audit-logs">Audit Logs & History</a></li>
+            <li><a href="#regulatory-standards">Regulatory Standards</a></li>
+            <li><a href="#automated-reports">Automated Reports</a></li>
+            <li><a href="#integrations">Integrations</a></li>
+            <li><a href="#user-management">User Management</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
     </nav>
-    <script src="bundle.js"></script>
+
+    <div class="main-content">
+        <header class="top-nav">
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="notification-center">
+                <button>Notifications</button>
+            </div>
+            <div class="quick-actions">
+                <button>Quick Actions</button>
+            </div>
+            <div class="user-profile">
+                <button>Profile</button>
+            </div>
+        </header>
+
+        <div id="root"></div>
+    </div>
+
+    <script src="scripts/demo.js"></script>
 </body>
 </html> 

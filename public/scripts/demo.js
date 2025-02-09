@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Mobile Navigation Toggle
+  const sidebarToggle = document.createElement('button');
+  sidebarToggle.classList.add('sidebar-toggle');
+  sidebarToggle.innerHTML = '☰';
+  document.body.appendChild(sidebarToggle);
+
+  sidebarToggle.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.toggle('active');
+  });
+
+  // Micro-interactions
+  const menuItems = document.querySelectorAll('.sidebar-menu a');
+  menuItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      item.style.transform = 'translateX(5px)';
+    });
+    item.addEventListener('mouseleave', () => {
+      item.style.transform = 'translateX(0)';
+    });
+  });
+
+  // Demo Functionality
   const originalEstimate = document.getElementById('original-estimate');
   const correctedEstimate = document.getElementById('corrected-estimate');
   const recommendationsList = document.getElementById('recommendations-list');
@@ -6,41 +28,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const complianceScore = document.getElementById('compliance-score');
   const autoCorrectBtn = document.getElementById('auto-correct-btn');
 
-  // Example data
-  const exampleCorrections = [
-    { operation: 'Add Blend Adjacent Panel', hours: 1.5 },
-    { part: 'Fender', type: 'Aftermarket', cost: 350.00 }
-  ];
+  if (autoCorrectBtn) {
+    autoCorrectBtn.addEventListener('click', () => {
+      const correctedData = JSON.parse(originalEstimate.textContent);
 
-  const exampleRecommendations = [
-    'Use aftermarket parts to reduce costs.',
-    'Add blend operation for color match.'
-  ];
+      // Apply corrections
+      correctedData.operations.push({ name: 'Blend Adjacent Panel', hours: 1.5 });
+      correctedData.parts[0].type = 'Aftermarket';
+      correctedData.parts[0].cost = 350.00;
 
-  const exampleApprovalLikelihood = 85;
-  const exampleComplianceScore = 95;
+      // Display corrected estimate
+      correctedEstimate.textContent = JSON.stringify(correctedData, null, 2);
 
-  // Auto-Correction Button
-  autoCorrectBtn.addEventListener('click', () => {
-    const correctedData = JSON.parse(originalEstimate.textContent);
+      // Display recommendations
+      const recommendations = [
+        'Use aftermarket parts to reduce costs',
+        'Add blend operation for color match'
+      ];
+      recommendationsList.innerHTML = recommendations
+        .map(rec => `<li>${rec}</li>`)
+        .join('');
 
-    // Apply corrections
-    correctedData.operations.push({ name: 'Blend Adjacent Panel', hours: 1.5 });
-    correctedData.parts[0].type = 'Aftermarket';
-    correctedData.parts[0].cost = 350.00;
-
-    // Display corrected estimate
-    correctedEstimate.textContent = JSON.stringify(correctedData, null, 2);
-
-    // Display recommendations
-    recommendationsList.innerHTML = exampleRecommendations
-      .map(rec => `<li>${rec}</li>`)
-      .join('');
-
-    // Display approval likelihood
-    approvalLikelihood.textContent = `${exampleApprovalLikelihood}%`;
-
-    // Display compliance score
-    complianceScore.textContent = `${exampleComplianceScore}%`;
-  });
+      // Update metrics
+      approvalLikelihood.textContent = '85%';
+      complianceScore.textContent = '95%';
+    });
+  }
 }); 

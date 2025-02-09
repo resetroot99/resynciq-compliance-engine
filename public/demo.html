@@ -7,54 +7,83 @@
   <link rel="stylesheet" href="styles/demo.css">
 </head>
 <body>
-  <header>
-    <h1>ComplianceIQ Demo</h1>
-    <p>Experience AI-powered estimate review and compliance in action.</p>
-  </header>
-
-  <section id="estimate-review">
-    <h2>Estimate Review</h2>
-    <div class="estimate-container">
-      <div class="estimate">
-        <h3>Original Estimate</h3>
-        <pre id="original-estimate">
-          {
-            "operations": [
-              { "name": "Remove/Install Bumper Cover", "hours": 2.0 },
-              { "name": "Replace Fender", "hours": 3.5 }
-            ],
-            "parts": [
-              { "name": "Fender", "type": "OEM", "cost": 450.00 }
-            ]
-          }
-        </pre>
-      </div>
-      <div class="estimate">
-        <h3>Corrected Estimate</h3>
-        <pre id="corrected-estimate">
-          <!-- Auto-corrected estimate will appear here -->
-        </pre>
-      </div>
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <h2>ComplianceIQ</h2>
     </div>
-    <button id="auto-correct-btn">Apply Auto-Corrections</button>
-  </section>
-
-  <section id="recommendations">
-    <h2>Real-Time Recommendations</h2>
-    <ul id="recommendations-list">
-      <!-- Recommendations will appear here -->
+    <ul class="sidebar-menu">
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#compliance-validation">Compliance Validation</a></li>
+      <li><a href="#risk-assessment">Risk Assessment</a></li>
+      <li><a href="#audit-logs">Audit Logs & History</a></li>
+      <li><a href="#regulatory-standards">Regulatory Standards</a></li>
+      <li><a href="#automated-reports">Automated Reports</a></li>
+      <li><a href="#integrations">Integrations</a></li>
+      <li><a href="#user-management">User Management</a></li>
+      <li><a href="#settings">Settings</a></li>
     </ul>
-  </section>
+  </nav>
 
-  <section id="approval-prediction">
-    <h2>Approval Prediction</h2>
-    <p>Approval Likelihood: <span id="approval-likelihood">--%</span></p>
-  </section>
+  <div class="main-content">
+    <header class="top-nav">
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+      </div>
+      <div class="notification-center">
+        <button>Notifications</button>
+      </div>
+      <div class="quick-actions">
+        <button>Quick Actions</button>
+      </div>
+      <div class="user-profile">
+        <button>Profile</button>
+      </div>
+    </header>
 
-  <section id="compliance">
-    <h2>Insurer-Specific Compliance</h2>
-    <p>Compliance Score: <span id="compliance-score">--%</span></p>
-  </section>
+    <section id="estimate-review">
+      <h2>Estimate Review</h2>
+      <div class="estimate-container">
+        <div class="estimate">
+          <h3>Original Estimate</h3>
+          <pre id="original-estimate">
+            {
+              "operations": [
+                { "name": "Remove/Install Bumper Cover", "hours": 2.0 },
+                { "name": "Replace Fender", "hours": 3.5 }
+              ],
+              "parts": [
+                { "name": "Fender", "type": "OEM", "cost": 450.00 }
+              ]
+            }
+          </pre>
+        </div>
+        <div class="estimate">
+          <h3>Corrected Estimate</h3>
+          <pre id="corrected-estimate">
+            <!-- Auto-corrected estimate will appear here -->
+          </pre>
+        </div>
+      </div>
+      <button id="auto-correct-btn">Apply Auto-Corrections</button>
+    </section>
+
+    <section id="recommendations">
+      <h2>Real-Time Recommendations</h2>
+      <ul id="recommendations-list">
+        <!-- Recommendations will appear here -->
+      </ul>
+    </section>
+
+    <section id="approval-prediction">
+      <h2>Approval Prediction</h2>
+      <p>Approval Likelihood: <span id="approval-likelihood">--%</span></p>
+    </section>
+
+    <section id="compliance">
+      <h2>Insurer-Specific Compliance</h2>
+      <p>Compliance Score: <span id="compliance-score">--%</span></p>
+    </section>
+  </div>
 
   <script src="scripts/demo.js"></script>
 </body>
