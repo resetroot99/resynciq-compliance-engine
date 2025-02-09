@@ -42,21 +42,8 @@ services:
     environment:
       - AI_MODEL_PATH=/models
       - AI_MODEL_VERSION=${AI_MODEL_VERSION}
-      - INSURER_RULES_PATH=/rules
     volumes:
       - ./ai-models:/models
-      - ./ai-cache:/cache
-      - ./insurer-rules:/rules
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 4G
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   rules-service:
     # Insurer-Specific Customization: Dynamically adapts to different insurer rules
@@ -65,7 +52,6 @@ services:
       - "5001:5001"
     environment:
       - RULES_UPDATE_INTERVAL=3600
-      - RULES_SOURCE=dynamic
     volumes:
       - ./insurer-rules:/rules
 

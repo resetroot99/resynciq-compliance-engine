@@ -28,3 +28,10 @@ This project revolutionizes insurance estimate review and compliance by integrat
 
 ## **Mission Statement**
 🚀 **"Build ComplianceIQ to ensure every estimate is accurate, compliant, and optimized for first-time approval—before submission."** 
+
+## Live Demo
+Experience ComplianceIQ in action with our [live demo](https://your-domain.com/demo.html). The demo showcases:
+- AI-powered auto-corrections
+- Real-time recommendations
+- Predictive approval modeling
+- Insurer-specific compliance 

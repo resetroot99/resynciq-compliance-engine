@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComplianceIQ Demo</title>
+  <link rel="stylesheet" href="styles/demo.css">
+</head>
+<body>
+  <header>
+    <h1>ComplianceIQ Demo</h1>
+    <p>Experience AI-powered estimate review and compliance in action.</p>
+  </header>
+
+  <section id="estimate-review">
+    <h2>Estimate Review</h2>
+    <div class="estimate-container">
+      <div class="estimate">
+        <h3>Original Estimate</h3>
+        <pre id="original-estimate">
+          {
+            "operations": [
+              { "name": "Remove/Install Bumper Cover", "hours": 2.0 },
+              { "name": "Replace Fender", "hours": 3.5 }
+            ],
+            "parts": [
+              { "name": "Fender", "type": "OEM", "cost": 450.00 }
+            ]
+          }
+        </pre>
+      </div>
+      <div class="estimate">
+        <h3>Corrected Estimate</h3>
+        <pre id="corrected-estimate">
+          <!-- Auto-corrected estimate will appear here -->
+        </pre>
+      </div>
+    </div>
+    <button id="auto-correct-btn">Apply Auto-Corrections</button>
+  </section>
+
+  <section id="recommendations">
+    <h2>Real-Time Recommendations</h2>
+    <ul id="recommendations-list">
+      <!-- Recommendations will appear here -->
+    </ul>
+  </section>
+
+  <section id="approval-prediction">
+    <h2>Approval Prediction</h2>
+    <p>Approval Likelihood: <span id="approval-likelihood">--%</span></p>
+  </section>
+
+  <section id="compliance">
+    <h2>Insurer-Specific Compliance</h2>
+    <p>Compliance Score: <span id="compliance-score">--%</span></p>
+  </section>
+
+  <script src="scripts/demo.js"></script>
+</body>
+</html> 

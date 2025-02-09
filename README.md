@@ -17,7 +17,11 @@ The Direct Repair Program (DRP) is a network of collision repair shops that work
 
 ![Demo Screenshot](https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/screenshots/dashboard.png)
 
-Test the application live: [ReSyncIQ Compliance Engine](https://resetroot99.github.io/resynciq-compliance-engine)
+Experience ComplianceIQ in action with our [live demo](https://your-domain.com/demo.html). The demo showcases:
+- AI-powered auto-corrections
+- Real-time recommendations
+- Predictive approval modeling
+- Insurer-specific compliance
 
 ## 🚀 Quick Start
 
