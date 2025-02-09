@@ -35,13 +35,13 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     assetsDir: 'assets',
     sourcemap: true,
     rollupOptions: {
       input: {
         main: './index.html',
-        demo: './public/demo.html'
+        demo: './docs/demo.html'
       }
     }
   }
