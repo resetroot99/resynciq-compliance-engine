@@ -1,25 +1,33 @@
 class EstimateWorkflow {
     static async processNewEstimate(file) {
         try {
-            UIState.setProcessingState('Analyzing estimate...');
-
-            // Extract and validate data
-            const extractedData = await EstimateProcessor.processNewEstimate(file);
+            UIState.setProcessingState('Uploading and processing estimate...');
             
-            // Run AI analysis
-            const analysis = await this.runCompleteAnalysis(extractedData);
+            // Upload file and extract data using OCR service
+            const extractedData = await OCRService.extractFromPDF(file);
             
-            // Update UI with results
-            await UIState.updateAllViews(extractedData, analysis);
+            // Run AI analysis via predictive model service
+            const analysis = await PredictiveModelService.analyzeEstimate(extractedData);
             
-            // Log for learning
-            await this.logEstimateProcessing(extractedData, analysis);
-
-            return {
+            // Validate the estimate data
+            const validation = ValidationService.validateEstimateData(extractedData);
+            if (!validation.isValid) {
+                throw new Error('Validation failed: ' + validation.errors.join(', '));
+            }
+            
+            // Store the uploaded estimate together with its metadata
+            const storageResponse = await EstimateStorageService.storeEstimate(file, {
                 extractedData,
-                analysis
-            };
+                timestamp: new Date().toISOString()
+            });
+            
+            // Refresh the uploaded estimates queue
+            await QueueService.refreshQueue && QueueService.refreshQueue();
+            
+            UIState.clearProcessingState();
+            return { extractedData, analysis, storageResponse };
         } catch (error) {
+            UIState.clearProcessingState();
             ErrorHandler.showError(error);
             throw error;
         }
@@ -83,23 +91,22 @@ class EstimateWorkflow {
 
     static async finalizeEstimate(estimateId, action) {
         try {
-            UIState.setProcessingState(`Finalizing estimate (${action})...`);
-
-            const result = await EstimateService.processEstimate(estimateId, action);
-            
-            // Update queue
-            await QueueService.updateQueueItem(estimateId, { status: action });
-            
-            // Log action
-            await LearningFeedback.logAction({
-                type: 'estimate_finalization',
-                estimateId,
-                action,
-                timestamp: new Date().toISOString()
+            UIState.setProcessingState(`Processing ${action}...`);
+            const response = await fetch(`${CONFIG.API_BASE_URL}/estimates/${estimateId}/finalize`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AuthService.getToken()}`
+                },
+                body: JSON.stringify({ action })
             });
-
-            return result;
+            if (!response.ok) {
+                throw new Error('Failed to finalize estimate');
+            }
+            UIState.clearProcessingState();
+            return response.json();
         } catch (error) {
+            UIState.clearProcessingState();
             ErrorHandler.showError(error);
             throw error;
         }
