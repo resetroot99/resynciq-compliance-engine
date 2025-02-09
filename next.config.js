@@ -17,6 +17,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: '/',
+        destination: '/index.html',
+      },
+      {
         source: '/:path*',
         destination: '/404',
       },

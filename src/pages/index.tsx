@@ -9,7 +9,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoading) {
-      router.replace(user ? '/dashboard' : '/login');
+      const redirectPath = router.query.redirect || '/dashboard';
+      router.replace(user ? redirectPath : `/login?redirect=${redirectPath}`);
     }
   }, [user, isLoading, router]);
 
