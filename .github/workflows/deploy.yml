@@ -17,29 +17,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: '/resynciq-compliance-engine'
 
-      - name: Configure GitHub Pages
-        run: |
-          touch out/.nojekyll
-          cp -r out/* .
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "Deploy to GitHub Pages"
-          git push origin main
+      - name: Export
+        run: npm run export
+
+      - name: Add .nojekyll file
+        run: touch out/.nojekyll
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: out
-          branch: gh-pages
-          clean: true 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          force_orphan: true 
