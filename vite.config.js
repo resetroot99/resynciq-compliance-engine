@@ -4,7 +4,7 @@ import javascriptObfuscator from 'rollup-plugin-javascript-obfuscator'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: '/resynciq-compliance-engine/',
   plugins: [
     react(),
     javascriptObfuscator({
