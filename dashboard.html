@@ -21,39 +21,7 @@
     </header>
 
     <div class="dashboard-container">
-        <aside class="terminal-sidebar">
-            <nav>
-                <div class="nav-header">$ menu</div>
-                <ul>
-                    <li class="active">
-                        <span class="prompt">></span>
-                        <a href="#upload">estimate-upload</a>
-                    </li>
-                    <li>
-                        <span class="prompt">></span>
-                        <a href="#recommendations">ai-recommendations</a>
-                    </li>
-                    <li>
-                        <span class="prompt">></span>
-                        <a href="#compliance">compliance-status</a>
-                    </li>
-                    <li>
-                        <span class="prompt">></span>
-                        <a href="#queue">review-queue</a>
-                    </li>
-                    <li>
-                        <span class="prompt">></span>
-                        <a href="#estimate-detail">estimate-detail</a>
-                    </li>
-                    <li class="coming-soon">
-                        <span class="prompt">~</span>
-                        <a href="#api">api-integration</a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-
-        <main class="terminal-content">
+        <main class="content">
             <!-- Upload Section -->
             <section id="upload" class="active-section">
                 <div class="card">
@@ -81,30 +49,21 @@
 
             <!-- Compliance Section -->
             <section id="compliance" class="hidden">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> compliance-check
-                    </div>
-                    <div class="terminal-body">
-                        <div class="compliance-grid">
-                            <div class="compliance-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Insurance Guidelines
-                                    <span class="status" id="insuranceStatus"></span>
-                                </div>
-                                <div class="compliance-content" id="insuranceChecks">
-                                    <!-- Dynamically populated -->
-                                </div>
+                <div class="card">
+                    <h2>Compliance Check</h2>
+                    <p>Review the compliance guidelines and standards for your estimate. Check insurance and OEM standards for detailed comparisons.</p>
+                    <div class="compliance-grid">
+                        <div class="compliance-card">
+                            <h3>Insurance Guidelines <span class="status" id="insuranceStatus"></span></h3>
+                            <div class="compliance-content" id="insuranceChecks">
+                                <!-- Dynamically populated -->
                             </div>
+                        </div>
 
-                            <div class="compliance-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>OEM Standards
-                                    <span class="status" id="oemStatus"></span>
-                                </div>
-                                <div class="compliance-content" id="oemChecks">
-                                    <!-- Dynamically populated -->
-                                </div>
+                        <div class="compliance-card">
+                            <h3>OEM Standards <span class="status" id="oemStatus"></span></h3>
+                            <div class="compliance-content" id="oemChecks">
+                                <!-- Dynamically populated -->
                             </div>
                         </div>
                     </div>
