@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '',  // Serve from root
+  basePath: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
   trailingSlash: true,
   images: {
     unoptimized: true,
