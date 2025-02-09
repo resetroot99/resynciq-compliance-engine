@@ -41,7 +41,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
-        demo: './docs/demo.html'
+        demo: './public/demo.html'
       }
     }
   }
