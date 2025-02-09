@@ -4,7 +4,7 @@ import { obfuscator } from 'rollup-plugin-obfuscator'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/complianceiq/',
+  base: '/',
   plugins: [
     react(),
     obfuscator({
@@ -23,29 +23,25 @@ export default defineConfig({
       unicodeEscapeSequence: false
     })
   ],
-  build: {
-    outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ai: ['@tensorflow/tfjs'],
-          utils: ['lodash', 'axios']
-        }
-      }
-    }
-  },
   server: {
+    port: 3000,
+    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
-      },
-      '/insurer-rules': {
-        target: 'http://localhost:5001',
-        changeOrigin: true
+      }
+    }
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: '/index.html',
+        demo: '/public/demo.html'
       }
     }
   }

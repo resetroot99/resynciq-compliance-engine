@@ -5,11 +5,12 @@
   "main": "src/app.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "dev": "nodemon --exec ts-node src/app.ts",
+    "dev": "vite",
     "test": "jest",
-    "build": "tsc",
+    "build": "vite build",
     "lint": "eslint . --ext .ts",
-    "deploy": "node scripts/deploy.js"
+    "deploy": "node scripts/deploy.js",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@prisma/client": "^3.0.0",
