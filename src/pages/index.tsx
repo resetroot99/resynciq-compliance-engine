@@ -9,10 +9,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoading) {
-      const redirectPath = router.query.redirect || '/dashboard';
-      router.replace(user ? redirectPath : `/login?redirect=${redirectPath}`);
+      const basePath = process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '';
+      const redirectPath = router.query.redirect || `${basePath}/dashboard`;
+      router.replace(user ? redirectPath : `${basePath}/login?redirect=${redirectPath}`);
     }
   }, [user, isLoading, router]);
 
-  return <LoadingScreen />;
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <LoadingScreen />
+    </div>
+  );
 } 

@@ -3,29 +3,17 @@ const nextConfig = {
   output: 'export',
   basePath: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
   trailingSlash: true,
-  caseSensitive: true,
   images: {
     unoptimized: true,
     domains: [
       'raw.githubusercontent.com',
       'www.gravatar.com',
       's.gravatar.com',
-      'lh3.googleusercontent.com'  // For Google OAuth profile pictures
+      'lh3.googleusercontent.com'
     ]
   },
-  // Add custom 404 page handling
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/index.html',
-      },
-      {
-        source: '/:path*',
-        destination: '/404',
-      },
-    ];
-  },
+  // Remove rewrites as they don't work with static export
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
 };
 
 module.exports = nextConfig; 

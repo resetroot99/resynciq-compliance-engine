@@ -53,16 +53,6 @@ Test the application live: [ReSyncIQ Compliance Engine](https://resetroot99.gith
 - 📱 Mobile-Friendly Interface
 - 🔒 Enterprise-Grade Security
 
-## Video Demos
-
-### Overview
-[![Watch the video](https://img.youtube.com/vi/VIDEO_ID_1/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_1)
-
-### Estimate Processing
-[![Watch the video](https://img.youtube.com/vi/VIDEO_ID_2/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_2)
-
-### Compliance Validation
-[![Watch the video](https://img.youtube.com/vi/VIDEO_ID_3/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_3)
 
 ## Case Studies
 
