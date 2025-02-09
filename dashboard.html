@@ -6,6 +6,7 @@
     <title>Dashboard - ComplianceIQ</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard">
@@ -15,7 +16,6 @@
                 <a href="#analysis" class="nav-item">Analysis</a>
                 <a href="#compliance" class="nav-item">Compliance</a>
                 <a href="#queue" class="nav-item">Queue</a>
-                <a href="#settings" class="nav-item">Settings</a>
             </div>
         </aside>
 
@@ -23,6 +23,10 @@
             <header class="dashboard-header">
                 <div class="header-title">Dashboard</div>
                 <div class="header-actions">
+                    <div class="status-indicator">
+                        <span id="queueCount" class="badge">0</span>
+                        <span>Pending Reviews</span>
+                    </div>
                     <button class="btn">Help</button>
                     <button onclick="logout()" class="btn">Sign Out</button>
                 </div>
@@ -30,6 +34,11 @@
 
             <div class="content-area">
                 <section id="upload" class="section">
+                    <div class="section-header">
+                        <h2>Upload Estimate</h2>
+                        <p class="section-description">Upload PDF or EMS files for analysis</p>
+                    </div>
+                    
                     <div class="upload-zone" id="dropZone">
                         <p>Drop estimate file here</p>
                         <span>or</span>
@@ -38,32 +47,34 @@
                             Select File
                         </button>
                     </div>
+                    
+                    <div id="uploadProgress" class="progress-container hidden">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <p class="progress-text">Processing estimate...</p>
+                    </div>
                 </section>
 
                 <section id="queue" class="section hidden">
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
-                            <h2>Review Queue</h2>
-                            <select class="input" style="width: 200px">
+                    <div class="section-header">
+                        <h2>Review Queue</h2>
+                        <div class="queue-controls">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="input" placeholder="Search estimates...">
+                            </div>
+                            <select class="input" id="queueFilter">
                                 <option>All Estimates</option>
                                 <option>Pending Review</option>
                                 <option>Approved</option>
                                 <option>Rejected</option>
                             </select>
                         </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="queueList">
-                                <!-- Dynamic content -->
-                            </tbody>
-                        </table>
+                    </div>
+                    
+                    <div class="queue-list" id="queueList">
+                        <!-- Queue items will be dynamically added here -->
                     </div>
                 </section>
             </div>
@@ -71,5 +82,6 @@
     </div>
 
     <script src="dashboard.js"></script>
+    <script src="api.js"></script>
 </body>
 </html> 

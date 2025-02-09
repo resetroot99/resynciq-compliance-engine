@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In - ComplianceIQ</title>
+  <title>Login - ComplianceIQ</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,21 +12,27 @@
       <div class="card">
         <div class="login-header">
           <h1>Sign In</h1>
-          <p class="text-muted">Access your dashboard</p>
+          <p class="text-muted">Access your ComplianceIQ dashboard</p>
         </div>
         
-        <form class="login-form">
-          <div class="input-group">
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" class="input" required>
           </div>
           
-          <div class="input-group">
+          <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" class="input" required>
           </div>
           
-          <button type="submit" class="btn btn-primary" style="width: 100%">Sign In</button>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+          </div>
+          
+          <div class="form-group text-center">
+            <a href="#forgot-password" class="text-muted">Forgot Password?</a>
+          </div>
         </form>
       </div>
     </div>

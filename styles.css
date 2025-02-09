@@ -20,12 +20,12 @@
     --white: #ffffff;
     
     /* Typography */
-    --font-primary: Arial, -apple-system, sans-serif;
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.813rem;
-    --font-size-base: 0.875rem;
-    --font-size-lg: 1rem;
-    --font-size-xl: 1.125rem;
+    --font-primary: 'Arial', 'Segoe UI', system-ui, sans-serif;
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.813rem;   /* 13px */
+    --font-size-base: 0.875rem; /* 14px */
+    --font-size-lg: 1rem;       /* 16px */
+    --font-size-xl: 1.125rem;   /* 18px */
     
     /* Spacing */
     --space-1: 0.25rem;
@@ -168,15 +168,21 @@ p {
 /* Notifications */
 .notification {
     position: fixed;
-    top: var(--space-4);
+    bottom: var(--space-4);
     right: var(--space-4);
-    z-index: 50;
-    animation: slideIn 0.2s ease-out;
+    padding: var(--space-4);
+    border-radius: 4px;
+    z-index: 1000;
 }
 
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+.notification.success {
+    background: var(--success);
+    color: white;
+}
+
+.notification.error {
+    background: var(--danger);
+    color: white;
 }
 
 /* Login Page Styles */
@@ -258,4 +264,35 @@ p {
     width: 80%;
     padding: 20px;
     background-color: white;
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-muted { color: var(--gray-500); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.p-4 { padding: var(--space-4); }
+.shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* Form Enhancements */
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--gray-700);
+    font-weight: 500;
+}
+
+/* Enhanced Buttons */
+.btn-secondary {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-200);
 } 

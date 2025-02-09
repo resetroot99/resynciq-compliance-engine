@@ -1,5 +1,7 @@
 /* 
    ComplianceIQ
-   A product by The Crash Co.
-   Built by Ali J.
+   Developed by Ali Jakvani
+   Collision Industry Expert & Software Developer
+   Version 1.0.0
+   March 2024
 */ 
