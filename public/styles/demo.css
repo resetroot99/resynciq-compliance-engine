@@ -16,6 +16,11 @@ body {
   min-height: 100vh;
 }
 
+/* Add this to ensure all text elements are visible */
+h1, h2, h3, h4, h5, h6, p, li, a, button, input, pre {
+  color: #fff;
+}
+
 /* Sidebar Navigation */
 .sidebar {
   position: fixed;
@@ -144,10 +149,11 @@ h2 {
   border-radius: 8px;
 }
 
+/* Ensure pre elements have a contrasting background */
 pre {
-  background-color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 8px;
   overflow-x: auto;
 }
 

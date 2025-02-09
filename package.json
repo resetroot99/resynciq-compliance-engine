@@ -14,24 +14,27 @@
   },
   "dependencies": {
     "@prisma/client": "^3.0.0",
-    "express": "^4.17.1",
-    "typescript": "^4.4.3",
-    "ts-node": "^10.2.1",
-    "nodemon": "^2.0.12",
-    "jest": "^27.2.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-typescript": "^14.0.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.25.1",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
+    "jest": "^27.2.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.10",
+    "@types/node": "^22.13.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "nodemon": "^3.1.9",
+    "rollup-plugin-javascript-obfuscator": "^1.0.4",
     "ts-jest": "^27.0.5",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "vite": "^5.4.14"
   }
-} 
+}

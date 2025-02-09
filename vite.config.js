@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { obfuscator } from 'rollup-plugin-obfuscator'
+import javascriptObfuscator from 'rollup-plugin-javascript-obfuscator'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/',
   plugins: [
     react(),
-    obfuscator({
+    javascriptObfuscator({
       compact: true,
       controlFlowFlattening: true,
       deadCodeInjection: true,
@@ -40,8 +40,8 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: {
-        main: '/index.html',
-        demo: '/public/demo.html'
+        main: './index.html',
+        demo: './public/demo.html'
       }
     }
   }
