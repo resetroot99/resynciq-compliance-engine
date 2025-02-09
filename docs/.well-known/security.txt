@@ -1,0 +1,7 @@
+Contact: mailto:security@resynciq.com
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://resynciq.com/pgp-key.txt
+Acknowledgments: https://resynciq.com/security/hall-of-fame
+Preferred-Languages: en
+Canonical: https://alijakvani.github.io/resynciq-compliance-engine/.well-known/security.txt
+Policy: https://resynciq.com/security-policy 

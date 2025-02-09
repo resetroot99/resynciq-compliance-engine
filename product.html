@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComplianceIQ - Product</title>
+    <title>ComplianceIQ - AI-Powered Estimate Review</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header class="site-header">
         <nav class="nav-container">
-            <div class="logo">
-                <img src="logo.png" alt="ComplianceIQ">
-            </div>
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="product.html" class="active">Product</a>
-                <a href="#pricing">Pricing</a>
+                <a href="#features">Features</a>
+                <a href="#workflow">How it Works</a>
+                <a href="#rules">DRP Rules</a>
                 <a href="login.html" class="btn btn-primary">Sign In</a>
             </div>
         </nav>
@@ -25,93 +23,88 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>AI-Powered Estimate Review & Compliance</h1>
-                <p class="lead">Streamline your workflow with intelligent analysis and automated compliance checks</p>
+                <h1>Automated DRP Compliance</h1>
+                <p class="lead">AI-powered estimate review for collision repair facilities</p>
+                <div class="hero-actions">
+                    <a href="#demo" class="btn btn-primary">Watch Demo</a>
+                    <a href="login.html" class="btn">Try It Free</a>
+                </div>
             </div>
         </section>
 
-        <section class="features">
+        <section id="features" class="section">
             <div class="container">
                 <h2>Key Features</h2>
                 <div class="feature-grid">
                     <div class="feature-card">
-                        <h3>Smart Upload</h3>
-                        <p>Upload PDF/EMS files with intelligent OCR extraction and data validation</p>
-                    </div>
-                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
                         <h3>AI Analysis</h3>
-                        <p>Advanced analysis of labor rates, parts, and operations with predictive modeling</p>
+                        <p>Advanced OCR and machine learning to analyze labor rates, parts pricing, and operations</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Compliance Check</h3>
-                        <p>Automated verification against insurance and OEM guidelines</p>
+                        <i class="fas fa-check-circle"></i>
+                        <h3>DRP Compliance</h3>
+                        <p>Automated verification against insurance guidelines and program requirements</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Review Queue</h3>
-                        <p>Efficient management of estimate reviews with smart filtering</p>
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Performance Metrics</h3>
+                        <p>Track compliance scores and program performance over time</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="workflow">
+        <section id="workflow" class="section">
             <div class="container">
                 <h2>How It Works</h2>
                 <div class="workflow-steps">
                     <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Upload</h3>
-                        <p>Upload your estimate files through our intuitive interface</p>
+                        <span class="step-number">1</span>
+                        <h3>Upload Estimate</h3>
+                        <p>Submit PDF or EMS files through our intuitive interface</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Analysis</h3>
-                        <p>AI processes and analyzes the estimate data</p>
+                        <span class="step-number">2</span>
+                        <h3>AI Processing</h3>
+                        <p>Our AI analyzes every aspect of the estimate against DRP guidelines</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Review</h3>
-                        <p>Review AI recommendations and compliance checks</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <h3>Approve</h3>
-                        <p>Make informed decisions with confidence</p>
+                        <span class="step-number">3</span>
+                        <h3>Review & Approve</h3>
+                        <p>Get instant feedback and recommendations for compliance</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="integrations">
+        <section id="demo" class="section">
             <div class="container">
-                <h2>Integrations</h2>
-                <div class="integration-logos">
-                    <!-- Add integration partner logos -->
+                <h2>See It In Action</h2>
+                <div class="demo-container">
+                    <div class="demo-video">
+                        <video controls>
+                            <source src="demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="demo-features">
+                        <h3>Featured Example</h3>
+                        <ul>
+                            <li>GEICO ARX Program Compliance</li>
+                            <li>Labor Rate Analysis</li>
+                            <li>Parts Price Verification</li>
+                            <li>Automated Corrections</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="cta">
-            <div class="container">
-                <h2>Ready to streamline your workflow?</h2>
-                <p>Join leading companies using ComplianceIQ to optimize their estimate review process</p>
-                <a href="login.html" class="btn btn-primary">Get Started</a>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>ComplianceIQ</h3>
-                    <p>A product by The Crash Co.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>Email: support@complianceiq.com</p>
-                </div>
-            </div>
+            <p>Built by Ali J. - Collision Industry Expert</p>
         </div>
     </footer>
 </body>

@@ -1,0 +1,38 @@
+.rules-container {
+    padding: var(--space-6);
+}
+
+.rule-editor {
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    padding: var(--space-6);
+    max-width: 800px;
+}
+
+.rule-group {
+    margin: var(--space-6) 0;
+    padding: var(--space-4);
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.rule-group h3 {
+    margin-bottom: var(--space-4);
+    color: var(--gray-700);
+}
+
+.rule-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-3);
+}
+
+.rule-input label {
+    width: 200px;
+    color: var(--gray-600);
+}
+
+.rule-input .input {
+    width: 120px;
+} 

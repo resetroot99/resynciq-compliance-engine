@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReSyncIQ Compliance Engine Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="dashboard-sidebar">
+            <div class="logo">
+                <img src="assets/resynciq-logo.svg" alt="ReSyncIQ Logo">
+            </div>
+            <div class="nav-menu">
+                <a href="#upload" class="nav-item">Upload</a>
+                <a href="#review" class="nav-item active">Review</a>
+                <a href="#analytics" class="nav-item">Analytics</a>
+                <a href="#settings" class="nav-item">Settings</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="header-title">Dashboard</div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span id="queueCount" class="badge">0</span>
+                        <span>Pending Reviews</span>
+                    </div>
+                    <button class="btn">Help</button>
+                    <button onclick="logout()" class="btn">Sign Out</button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="review" class="section">
+                    <div class="review-header">
+                        <h2>AI-Powered Review</h2>
+                        <div class="confidence-score">
+                            AI Confidence: <span id="aiConfidence">94%</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Analysis Results -->
+                    <div class="analysis-panel">
+                        <div class="panel-section">
+                            <h3>ReSyncIQ Compliance Check</h3>
+                            <div class="compliance-items" id="complianceList">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div class="panel-section">
+                            <h3>Auto-Corrections Applied</h3>
+                            <div class="corrections-list" id="correctionsList">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div class="panel-section">
+                            <h3>AI Recommendations</h3>
+                            <div class="recommendations-list" id="recommendationsList">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Actions -->
+                    <div class="review-actions">
+                        <button class="btn btn-secondary" onclick="applyAICorrections()">
+                            Apply AI Corrections
+                        </button>
+                        <button class="btn btn-primary" onclick="approveEstimate()">
+                            Approve & Submit
+                        </button>
+                    </div>
+
+                    <!-- Feedback Loop -->
+                    <div class="feedback-section">
+                        <h3>Improve AI Recommendations</h3>
+                        <div class="feedback-form">
+                            <textarea id="aiFeedback" placeholder="Provide feedback on AI suggestions..."></textarea>
+                            <button class="btn" onclick="submitAIFeedback()">Submit Feedback</button>
+                        </div>
+                        <p class="text-muted">Help improve ReSyncIQ's AI recommendations</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="ai-service.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html> 

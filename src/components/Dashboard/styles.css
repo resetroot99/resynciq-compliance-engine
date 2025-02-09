@@ -28,6 +28,7 @@
     text-decoration: none;
     margin-bottom: 2px;
     transition: all 0.15s;
+    gap: var(--space-2);
 }
 
 .nav-item:hover {
@@ -38,6 +39,11 @@
 .nav-item.active {
     background: var(--primary);
     color: var(--white);
+}
+
+.nav-item i {
+    width: 20px;
+    text-align: center;
 }
 
 /* Main Content */
@@ -79,6 +85,73 @@
     background: var(--gray-50);
 }
 
+/* Icons and Visual Improvements */
+.upload-icon {
+    font-size: 48px;
+    color: var(--gray-400);
+    margin-bottom: var(--space-4);
+}
+
+.upload-text {
+    font-size: var(--font-size-lg);
+    color: var(--gray-600);
+    margin-bottom: var(--space-2);
+}
+
+.upload-divider {
+    color: var(--gray-400);
+    margin: var(--space-2) 0;
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-top: var(--space-4);
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--gray-200);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+    margin-top: var(--space-2);
+    text-align: center;
+}
+
+/* Search and Filters */
+.queue-controls {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+}
+
+.search-box i {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+}
+
+.search-box .input {
+    padding-left: calc(var(--space-3) * 2 + 16px);
+}
+
 /* Tables */
 .table {
     width: 100%;
@@ -100,4 +173,9 @@
     padding: var(--space-3);
     font-size: var(--font-size-sm);
     border-top: 1px solid var(--gray-200);
+}
+
+/* Update any specific references */
+.header {
+    content: "ReSyncIQ Compliance Engine";
 } 

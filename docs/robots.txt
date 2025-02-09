@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Sitemap: https://alijakvani.github.io/resynciq-compliance-engine/sitemap.xml 

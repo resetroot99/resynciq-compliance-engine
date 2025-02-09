@@ -39,4 +39,42 @@ const FEATURES = {
     PREDICTIVE_MODELING: true,
     AUTO_CORRECTION: true,
     LEARNING_FEEDBACK: true
-}; 
+};
+
+const config = {
+    production: {
+        API_URL: 'https://api.resynciq.com/v1',
+        SOCKET_URL: 'wss://ws.resynciq.com',
+        CDN_URL: 'https://cdn.resynciq.com',
+        FEATURES: {
+            AI_ANALYSIS: true,
+            REAL_TIME_UPDATES: true,
+            CCC_INTEGRATION: true,
+            LEARNING_FEEDBACK: true
+        }
+    },
+    staging: {
+        API_URL: 'https://staging-api.resynciq.com/v1',
+        SOCKET_URL: 'wss://staging-ws.resynciq.com',
+        CDN_URL: 'https://staging-cdn.resynciq.com',
+        FEATURES: {
+            AI_ANALYSIS: true,
+            REAL_TIME_UPDATES: true,
+            CCC_INTEGRATION: true,
+            LEARNING_FEEDBACK: true
+        }
+    },
+    development: {
+        API_URL: 'http://localhost:3000/v1',
+        SOCKET_URL: 'ws://localhost:3001',
+        CDN_URL: 'http://localhost:3002',
+        FEATURES: {
+            AI_ANALYSIS: true,
+            REAL_TIME_UPDATES: true,
+            CCC_INTEGRATION: false,
+            LEARNING_FEEDBACK: true
+        }
+    }
+};
+
+export default config[process.env.NODE_ENV || 'development']; 

@@ -1,0 +1,23 @@
+title: ReSyncIQ Compliance Engine
+description: AI-powered compliance validation engine for collision repair estimates
+theme: jekyll-theme-minimal
+baseurl: "/resynciq-compliance-engine"
+url: "https://alijakvani.github.io"
+
+# SEO
+author: Ali Jakvani
+twitter:
+  username: alijakvani
+  card: summary_large_image
+
+# Analytics
+google_analytics: UA-XXXXXXXX-X
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Dashboard
+    url: /dashboard
+  - title: Documentation
+    url: /docs 

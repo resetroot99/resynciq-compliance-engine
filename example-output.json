@@ -1,0 +1,39 @@
+{
+  "estimate_id": "EST-2024-001",
+  "analysis": {
+    "compliance_score": 92,
+    "issues": [
+      {
+        "type": "labor_rate",
+        "description": "Body labor rate exceeds program maximum",
+        "current": 55.00,
+        "recommended": 52.00,
+        "severity": "high"
+      },
+      {
+        "type": "parts_markup",
+        "description": "Aftermarket parts markup above guideline",
+        "current": 40,
+        "recommended": 33,
+        "severity": "medium"
+      }
+    ],
+    "recommendations": [
+      {
+        "operation": "Body Labor Rate Adjustment",
+        "action": "Reduce to $52.00 per hour",
+        "impact": "$54.00 reduction"
+      },
+      {
+        "operation": "Parts Markup Correction",
+        "action": "Adjust aftermarket markup to 33%",
+        "impact": "$28.50 reduction"
+      }
+    ]
+  },
+  "corrections": {
+    "applied": true,
+    "timestamp": "2024-03-21T14:22:33Z",
+    "total_savings": 82.50
+  }
+} 

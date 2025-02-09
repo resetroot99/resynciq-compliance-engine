@@ -1,0 +1,83 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 2 * * *'  # Daily builds for AI model updates
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Type Check
+        run: npm run type-check
+      - name: Run tests
+        run: npm run test:coverage
+      - name: Run security audit
+        run: npm run security-audit
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://alijakvani.github.io/resynciq-compliance-engine
+      NODE_ENV: production
+      AI_MODEL_VERSION: ${{ github.sha }}
+      
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build TypeScript
+        run: npm run build:ts
+        
+      - name: Update AI Models
+        run: |
+          python scripts/update_ai_models.py
+          echo "AI_MODEL_UPDATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+          
+      - name: Run Security Checks
+        run: |
+          npm run security-audit
+          npm run dependency-check
+          
+      - name: Build Documentation
+        run: npm run docs
+        
+      - name: Copy assets
+        run: |
+          mkdir -p docs/css docs/js docs/assets
+          cp -r src/assets/styles/* docs/css/
+          cp -r dist/js/* docs/js/
+          cp -r src/assets/images/* docs/assets/
+          
+      - name: Update version
+        run: |
+          echo "RESYNCIQ_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          enable_jekyll: true
+          commit_message: "Deploy version ${{ env.RESYNCIQ_VERSION }} to GitHub Pages"
+          user_name: "Ali Jakvani"
+          user_email: "ali@resynciq.com" 

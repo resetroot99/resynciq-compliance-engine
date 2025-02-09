@@ -7,12 +7,19 @@ const uploadStatus = document.getElementById('uploadStatus');
 let currentEstimate = null;
 let currentAnalysis = null;
 
+// File processing timeout handler
+let processingTimeout;
+
 // Initialize dashboard
-document.addEventListener('DOMContentLoaded', async () => {
-    initializeEventListeners();
-    await loadQueueItems();
-    checkFeatureFlags();
+document.addEventListener('DOMContentLoaded', () => {
+    initializeDashboard();
+    loadQueueCount();
+    setupEventListeners();
 });
+
+function initializeDashboard() {
+    // Initialize ReSyncIQ dashboard components
+}
 
 // Initialize all event listeners
 function initializeEventListeners() {
@@ -395,4 +402,189 @@ queueFilter.addEventListener('change', filterQueue);
 searchQueue.addEventListener('input', filterQueue);
 
 // Initial render of queue items
-renderQueueItems(queueItems); 
+renderQueueItems(queueItems);
+
+// Handle file upload
+function handleFileUpload(file) {
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressFill = progressContainer.querySelector('.progress-fill');
+    const progressText = progressContainer.querySelector('.progress-text');
+    
+    progressContainer.classList.remove('hidden');
+    
+    // Clear any existing timeout
+    if (processingTimeout) {
+        clearTimeout(processingTimeout);
+    }
+    
+    // Set a timeout for processing
+    processingTimeout = setTimeout(() => {
+        handleProcessingError();
+    }, 30000); // 30 second timeout
+    
+    // Simulate progress (replace with actual processing)
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 5;
+        progressFill.style.width = `${progress}%`;
+        
+        if (progress >= 100) {
+            clearInterval(interval);
+            clearTimeout(processingTimeout);
+            handleProcessingComplete();
+        }
+    }, 200);
+}
+
+function handleProcessingError() {
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressText = progressContainer.querySelector('.progress-text');
+    
+    progressText.textContent = 'Processing failed. Please try again.';
+    progressText.style.color = 'var(--danger)';
+    
+    setTimeout(() => {
+        progressContainer.classList.add('hidden');
+    }, 3000);
+}
+
+function handleProcessingComplete() {
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressText = progressContainer.querySelector('.progress-text');
+    
+    progressText.textContent = 'Processing complete!';
+    progressText.style.color = 'var(--success)';
+    
+    setTimeout(() => {
+        progressContainer.classList.add('hidden');
+        // Update queue or show results
+        updateQueue();
+    }, 1500);
+}
+
+// Enhanced Error Handling
+class ErrorHandler {
+    static showError(error) {
+        const notification = document.createElement('div');
+        notification.className = 'notification error';
+        notification.textContent = error.message || 'An error occurred';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }
+
+    static showSuccess(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification success';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
+
+// Example usage in file processing
+async function processFile(file) {
+    try {
+        const estimate = await OCRService.process(file);
+        const analysis = await AIService.analyze(estimate);
+        
+        if (analysis.confidence >= CONFIG.AI_CONFIDENCE_THRESHOLD) {
+            const corrected = await AIService.autoCorrect(estimate, analysis);
+            ErrorHandler.showSuccess('Estimate processed successfully');
+            return corrected;
+        } else {
+            ErrorHandler.showError('Low confidence in analysis - manual review required');
+            return estimate;
+        }
+    } catch (error) {
+        ErrorHandler.showError(error);
+        throw error;
+    }
+}
+
+// AI Review Handling
+async function handleEstimateReview(estimateId) {
+    try {
+        showLoading('Analyzing estimate...');
+        
+        // Get estimate data from CCC
+        const estimateData = await api.get(APIEndpoints.GET_ESTIMATE, { id: estimateId });
+        
+        // Run AI analysis
+        const analysis = await aiService.analyzeEstimate(estimateData);
+        
+        // Update UI with results
+        updateAnalysisDisplay(analysis);
+        
+        // Apply auto-corrections if confidence is high
+        if (analysis.confidence >= aiService.confidenceThreshold) {
+            await applyAutoCorrections(analysis.autoCorrections);
+        }
+        
+        hideLoading();
+    } catch (error) {
+        ErrorHandler.showError(error);
+        hideLoading();
+    }
+}
+
+function updateAnalysisDisplay(analysis) {
+    // Update confidence score
+    document.getElementById('aiConfidence').textContent = 
+        `${Math.round(analysis.confidence * 100)}%`;
+    
+    // Update compliance list
+    const complianceList = document.getElementById('complianceList');
+    complianceList.innerHTML = analysis.compliance
+        .map(item => createComplianceItem(item))
+        .join('');
+    
+    // Update corrections list
+    const correctionsList = document.getElementById('correctionsList');
+    correctionsList.innerHTML = analysis.autoCorrections
+        .map(correction => createCorrectionItem(correction))
+        .join('');
+    
+    // Update recommendations
+    const recommendationsList = document.getElementById('recommendationsList');
+    recommendationsList.innerHTML = analysis.recommendations
+        .map(rec => createRecommendationItem(rec))
+        .join('');
+}
+
+async function applyAICorrections() {
+    try {
+        const analysis = await aiService.analyzeEstimate(currentEstimate);
+        
+        if (analysis.autoCorrections.length > 0) {
+            await api.post(APIEndpoints.APPLY_CORRECTIONS, {
+                estimateId: currentEstimate.id,
+                corrections: analysis.autoCorrections
+            });
+            
+            ErrorHandler.showSuccess('AI corrections applied successfully');
+            refreshEstimateView();
+        }
+    } catch (error) {
+        ErrorHandler.showError(error);
+    }
+}
+
+async function submitAIFeedback() {
+    const feedback = document.getElementById('aiFeedback').value;
+    
+    if (!feedback.trim()) return;
+    
+    try {
+        await aiService.submitFeedback(currentEstimate.id, feedback);
+        ErrorHandler.showSuccess('Feedback submitted successfully');
+        document.getElementById('aiFeedback').value = '';
+    } catch (error) {
+        ErrorHandler.showError(error);
+    }
+} 

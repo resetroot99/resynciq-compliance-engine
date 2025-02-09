@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRP Rules Management - ComplianceIQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="rules.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="dashboard-sidebar">
+            <div class="nav-menu">
+                <a href="#insurance" class="nav-item active">Insurance Programs</a>
+                <a href="#labor" class="nav-item">Labor Rules</a>
+                <a href="#parts" class="nav-item">Parts Guidelines</a>
+                <a href="#operations" class="nav-item">Operations</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="rules-container">
+                <section id="insurance" class="rules-section">
+                    <h2>Insurance Program Rules</h2>
+                    <div class="rule-editor">
+                        <select class="input" id="insuranceSelect">
+                            <option>GEICO ARX</option>
+                            <option>State Farm Select Service</option>
+                            <option>Allstate Good Hands</option>
+                        </select>
+                        
+                        <div class="rule-group">
+                            <h3>Labor Rates</h3>
+                            <div class="rule-input">
+                                <label>Body Labor Rate</label>
+                                <input type="number" class="input" value="52.00">
+                            </div>
+                            <div class="rule-input">
+                                <label>Paint Labor Rate</label>
+                                <input type="number" class="input" value="52.00">
+                            </div>
+                            <div class="rule-input">
+                                <label>Frame Labor Rate</label>
+                                <input type="number" class="input" value="65.00">
+                            </div>
+                        </div>
+
+                        <div class="rule-group">
+                            <h3>Parts Guidelines</h3>
+                            <div class="rule-input">
+                                <label>OEM Parts Markup</label>
+                                <input type="number" class="input" value="25">
+                            </div>
+                            <div class="rule-input">
+                                <label>Aftermarket Parts Markup</label>
+                                <input type="number" class="input" value="33">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary">Save Rules</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

@@ -49,48 +49,63 @@ section {
 }
 
 .hero {
-    background: linear-gradient(to right, var(--primary-light), var(--primary));
-    color: var(--white);
+    padding: var(--space-6) 0;
+    background: linear-gradient(to right, var(--gray-50), var(--gray-100));
     text-align: center;
-    padding: var(--spacing-12) 0;
 }
 
 .hero h1 {
-    color: var(--white);
-    font-size: 3rem;
-    margin-bottom: var(--spacing-4);
+    font-size: 2.5rem;
+    color: var(--gray-900);
+    margin-bottom: var(--space-4);
 }
 
-.lead {
+.hero .lead {
     font-size: var(--font-size-xl);
-    opacity: 0.9;
+    color: var(--gray-600);
+    max-width: 600px;
+    margin: 0 auto var(--space-6);
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
 }
 
 /* Features */
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-6);
-    margin-top: var(--spacing-8);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
 }
 
 .feature-card {
+    text-align: center;
+    padding: var(--space-6);
     background: var(--white);
-    padding: var(--spacing-6);
     border-radius: 8px;
     border: 1px solid var(--gray-200);
+}
+
+.feature-card i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: var(--space-4);
 }
 
 /* Workflow */
 .workflow-steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-6);
-    margin-top: var(--spacing-8);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
 }
 
 .step {
     text-align: center;
+    position: relative;
 }
 
 .step-number {
@@ -102,8 +117,54 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto var(--spacing-4);
+    margin: 0 auto var(--space-4);
     font-weight: 600;
+}
+
+/* Demo Section */
+.demo-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+}
+
+.demo-video {
+    background: var(--gray-900);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.demo-video video {
+    width: 100%;
+    display: block;
+}
+
+.demo-features {
+    background: var(--white);
+    padding: var(--space-6);
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+}
+
+.demo-features ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-4);
+}
+
+.demo-features li {
+    padding: var(--space-2) 0;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.demo-features li::before {
+    content: "✓";
+    color: var(--primary);
+    font-weight: bold;
 }
 
 /* CTA Section */
@@ -123,4 +184,9 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-8);
+}
+
+/* Product-specific styles */
+.landing-page {
+    /* Styles */
 } 
