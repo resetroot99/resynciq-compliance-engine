@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
+  trailingSlash: true,
+  caseSensitive: true,
   images: {
     unoptimized: true,
     domains: [
@@ -10,8 +13,6 @@ const nextConfig = {
       'lh3.googleusercontent.com'  // For Google OAuth profile pictures
     ]
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
-  trailingSlash: true,
   // Add custom 404 page handling
   async rewrites() {
     return [

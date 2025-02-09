@@ -17,6 +17,9 @@ export default function Custom404() {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">404 - Page Not Found</h1>
         <p className="text-gray-600">Redirecting to home page...</p>
+        <p className="text-sm text-gray-500 mt-4">
+          If you believe this is an error, please check the URL for correct case sensitivity.
+        </p>
       </div>
     </div>
   );

@@ -27,6 +27,13 @@ jobs:
       env:
         NEXT_PUBLIC_BASE_PATH: /resynciq-compliance-engine
 
+    - name: Verify file structure
+      run: |
+        ls -R out
+        echo "Verifying file paths..."
+        find out -type f | grep -i 'index.html'
+        find out -type f | grep -i '404.html'
+
     - name: Add .nojekyll file
       run: touch out/.nojekyll
 
