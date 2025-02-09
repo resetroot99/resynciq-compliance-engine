@@ -1,11 +1,5 @@
 /* 
-   ╔══════════════════════════════════════════════════╗
-   ║                                                  ║
-   ║      ,---,                                       ║
-   ║     (     )                    ║
-   ║      `- -'    here lies the bloody Aperoot,      ║
-   ║                he often tells the truth,       ║
-   ║                but lies to rest..                ║
-   ║                                                  ║
-   ╚══════════════════════════════════════════════════╝
+   ComplianceIQ
+   A product by The Crash Co.
+   Built by Ali J.
 */ 

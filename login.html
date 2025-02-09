@@ -3,31 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ComplianceIQ Login</title>
+  <title>Sign In - ComplianceIQ</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="login-page">
-  <div class="login-container">
-    <div class="login-card card">
-      <div class="login-header">
-        <img src="logo.png" alt="ComplianceIQ Logo" class="logo">
-        <h1>Welcome Back</h1>
-        <p>Sign in to your ComplianceIQ account</p>
+<body>
+  <div class="login-page">
+    <div class="login-container">
+      <div class="card">
+        <div class="login-header">
+          <h1>Sign In</h1>
+          <p class="text-muted">Access your dashboard</p>
+        </div>
+        
+        <form class="login-form">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="input" required>
+          </div>
+          
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="input" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" style="width: 100%">Sign In</button>
+        </form>
       </div>
-      <form id="loginForm" class="login-form">
-        <div class="input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" class="input" required>
-        </div>
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" class="input" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-        <div class="login-footer">
-          <a href="#" class="forgot-password">Forgot Password?</a>
-        </div>
-      </form>
     </div>
   </div>
   <script src="login.js"></script>

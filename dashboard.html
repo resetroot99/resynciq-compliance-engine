@@ -3,125 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComplianceIQ Dashboard</title>
+    <title>Dashboard - ComplianceIQ</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="dashboard-body">
-    <header class="dashboard-header">
-        <h1>ComplianceIQ</h1>
-        <nav class="nav-bar">
-            <a href="#upload">Upload Estimate</a>
-            <a href="#analysis">AI Analysis</a>
-            <a href="#compliance">Compliance</a>
-            <a href="#queue">Review Queue</a>
-            <a href="#detail">Estimate Details</a>
-            <button onclick="logout()" class="btn">Logout</button>
-        </nav>
-    </header>
+<body>
+    <div class="dashboard">
+        <aside class="dashboard-sidebar">
+            <div class="nav-menu">
+                <a href="#upload" class="nav-item active">Upload</a>
+                <a href="#analysis" class="nav-item">Analysis</a>
+                <a href="#compliance" class="nav-item">Compliance</a>
+                <a href="#queue" class="nav-item">Queue</a>
+                <a href="#settings" class="nav-item">Settings</a>
+            </div>
+        </aside>
 
-    <div class="dashboard-container">
-        <main class="content">
-            <!-- Upload Section -->
-            <section id="upload" class="active-section">
-                <div class="card">
-                    <h2>Upload Your Estimate</h2>
-                    <p>Upload your estimate in PDF or EMS format. Simply drag and drop your file or select one from your computer.</p>
-                    <div class="dropzone" id="dropZone">
-                        <p>Drag and drop your file here</p>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="header-title">Dashboard</div>
+                <div class="header-actions">
+                    <button class="btn">Help</button>
+                    <button onclick="logout()" class="btn">Sign Out</button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="upload" class="section">
+                    <div class="upload-zone" id="dropZone">
+                        <p>Drop estimate file here</p>
+                        <span>or</span>
                         <input type="file" id="fileInput" accept=".pdf,.ems" hidden>
-                        <button onclick="document.getElementById('fileInput').click()" class="btn">Choose File</button>
+                        <button onclick="document.getElementById('fileInput').click()" class="btn btn-primary">
+                            Select File
+                        </button>
                     </div>
-                    <div id="uploadStatus" class="output"></div>
-                </div>
-            </section>
+                </section>
 
-            <!-- AI Analysis Section -->
-            <section id="analysis" class="hidden">
-                <div class="card">
-                    <h2>AI Analysis</h2>
-                    <p>This section provides an in-depth AI analysis of your estimate. Review insights on labor, parts, operations, and predicted approval probability.</p>
-                    <div class="analysis-container">
-                        <!-- AI analysis content will be dynamically populated here -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Compliance Section -->
-            <section id="compliance" class="hidden">
-                <div class="card">
-                    <h2>Compliance Check</h2>
-                    <p>Review the compliance guidelines and standards for your estimate. Check insurance and OEM standards for detailed comparisons.</p>
-                    <div class="compliance-grid">
-                        <div class="compliance-card">
-                            <h3>Insurance Guidelines <span class="status" id="insuranceStatus"></span></h3>
-                            <div class="compliance-content" id="insuranceChecks">
-                                <!-- Dynamically populated -->
-                            </div>
+                <section id="queue" class="section hidden">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+                            <h2>Review Queue</h2>
+                            <select class="input" style="width: 200px">
+                                <option>All Estimates</option>
+                                <option>Pending Review</option>
+                                <option>Approved</option>
+                                <option>Rejected</option>
+                            </select>
                         </div>
-
-                        <div class="compliance-card">
-                            <h3>OEM Standards <span class="status" id="oemStatus"></span></h3>
-                            <div class="compliance-content" id="oemChecks">
-                                <!-- Dynamically populated -->
-                            </div>
-                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="queueList">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </section>
-
-            <!-- Queue Section -->
-            <section id="queue" class="hidden">
-                <div class="card">
-                    <h2>Review Queue</h2>
-                    <p>View and filter all submitted estimates. Use the dropdown to filter by estimate status or search for a specific estimate.</p>
-                    <div class="queue-filters">
-                        <select id="queueFilter" class="select">
-                            <option value="all">All Estimates</option>
-                            <option value="pending">Pending Review</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                        </select>
-                        <input type="text" id="searchQueue" class="input" placeholder="Search estimates...">
-                    </div>
-                    <div id="queueList" class="queue-list">
-                        <!-- Queue items will be dynamically added here -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Estimate Detail Section -->
-            <section id="detail" class="hidden">
-                <div class="card">
-                    <h2>Estimate Details</h2>
-                    <p>Examine a detailed view of your selected estimate — including summary information, labor rates, parts, operations, and actionable recommendations.</p>
-                    <div class="detail-grid">
-                        <!-- Various detail cards populated dynamically -->
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
     </div>
 
-    <script src="config.js"></script>
-    <script src="utils.js"></script>
-    <script src="error-handler.js"></script>
-    <script src="validation-service.js"></script>
-    <script src="ocr-service.js"></script>
-    <script src="predictive-model.js"></script>
-    <script src="compliance-service.js"></script>
-    <script src="auto-correction-impl.js"></script>
-    <script src="estimate-processor.js"></script>
-    <script src="ui-state.js"></script>
-    <script src="queue-service.js"></script>
-    <script src="learning-feedback-service.js"></script>
-    <script src="real-time-validation.js"></script>
-    <script src="services.js"></script>
-    <script src="feedback.js"></script>
-    <script src="template-service.js"></script>
-    <script src="estimate-detail-service.js"></script>
     <script src="dashboard.js"></script>
-    <script src="estimate-workflow.js"></script>
-    <script src="dashboard-controller.js"></script>
 </body>
 </html> 
