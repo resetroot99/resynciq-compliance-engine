@@ -9,14 +9,15 @@
 </head>
 <body class="dashboard-body">
     <header class="dashboard-header">
-        <div class="terminal-header">
-            <span class="prompt">$</span>
-            <h1>ComplianceIQ</h1>
-            <span class="session-info">session: ${username} | status: active</span>
-        </div>
-        <div class="user-info">
-            <button onclick="logout()" class="terminal-btn">[ Logout ]</button>
-        </div>
+        <h1>ComplianceIQ</h1>
+        <nav class="nav-bar">
+            <a href="#upload">Upload Estimate</a>
+            <a href="#analysis">AI Analysis</a>
+            <a href="#compliance">Compliance</a>
+            <a href="#queue">Review Queue</a>
+            <a href="#detail">Estimate Details</a>
+            <button onclick="logout()" class="btn">Logout</button>
+        </nav>
     </header>
 
     <div class="dashboard-container">
@@ -55,82 +56,25 @@
         <main class="terminal-content">
             <!-- Upload Section -->
             <section id="upload" class="active-section">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> upload-estimate
+                <div class="card">
+                    <h2>Upload Your Estimate</h2>
+                    <p>Upload your estimate in PDF or EMS format. Simply drag and drop your file or select one from your computer.</p>
+                    <div class="dropzone" id="dropZone">
+                        <p>Drag and drop your file here</p>
+                        <input type="file" id="fileInput" accept=".pdf,.ems" hidden>
+                        <button onclick="document.getElementById('fileInput').click()" class="btn">Choose File</button>
                     </div>
-                    <div class="terminal-body">
-                        <div class="dropzone" id="dropZone">
-                            <div class="terminal-prompt">
-                                <span class="prompt">></span> Drop PDF/EMS files here
-                            </div>
-                            <div class="terminal-or">or</div>
-                            <input type="file" id="fileInput" accept=".pdf,.ems" hidden>
-                            <button onclick="document.getElementById('fileInput').click()" class="terminal-btn">
-                                [ Choose File ]
-                            </button>
-                        </div>
-                        <div id="uploadStatus" class="terminal-output"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AI Recommendations Section -->
-            <section id="recommendations" class="hidden">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> ai-analysis
-                    </div>
-                    <div class="recommendations-container">
-                        <!-- AI recommendations will be dynamically added here -->
-                    </div>
+                    <div id="uploadStatus" class="output"></div>
                 </div>
             </section>
 
             <!-- AI Analysis Section -->
-            <section id="ai-analysis" class="hidden">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> ai-analysis-details
-                    </div>
-                    <div class="terminal-body">
-                        <div class="analysis-grid">
-                            <div class="analysis-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Labor Rate Analysis
-                                </div>
-                                <div class="analysis-content" id="laborAnalysis">
-                                    <!-- Dynamically populated -->
-                                </div>
-                            </div>
-                            
-                            <div class="analysis-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Parts Validation
-                                </div>
-                                <div class="analysis-content" id="partsAnalysis">
-                                    <!-- Dynamically populated -->
-                                </div>
-                            </div>
-
-                            <div class="analysis-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Operations Review
-                                </div>
-                                <div class="analysis-content" id="operationsAnalysis">
-                                    <!-- Dynamically populated -->
-                                </div>
-                            </div>
-
-                            <div class="analysis-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Approval Prediction
-                                </div>
-                                <div class="analysis-content" id="approvalPrediction">
-                                    <!-- Dynamically populated -->
-                                </div>
-                            </div>
-                        </div>
+            <section id="analysis" class="hidden">
+                <div class="card">
+                    <h2>AI Analysis</h2>
+                    <p>This section provides an in-depth AI analysis of your estimate. Review insights on labor, parts, operations, and predicted approval probability.</p>
+                    <div class="analysis-container">
+                        <!-- AI analysis content will be dynamically populated here -->
                     </div>
                 </div>
             </section>
@@ -169,152 +113,31 @@
 
             <!-- Queue Section -->
             <section id="queue" class="hidden">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> review-queue
+                <div class="card">
+                    <h2>Review Queue</h2>
+                    <p>View and filter all submitted estimates. Use the dropdown to filter by estimate status or search for a specific estimate.</p>
+                    <div class="queue-filters">
+                        <select id="queueFilter" class="select">
+                            <option value="all">All Estimates</option>
+                            <option value="pending">Pending Review</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <input type="text" id="searchQueue" class="input" placeholder="Search estimates...">
                     </div>
-                    <div class="terminal-body">
-                        <div class="queue-filters">
-                            <select id="queueFilter" class="terminal-select">
-                                <option value="all">All Estimates</option>
-                                <option value="pending">Pending Review</option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                            <input type="text" id="searchQueue" class="terminal-input" placeholder="Search estimates...">
-                        </div>
-                        <div id="queueList" class="queue-list">
-                            <!-- Queue items will be dynamically added here -->
-                        </div>
+                    <div id="queueList" class="queue-list">
+                        <!-- Queue items will be dynamically added here -->
                     </div>
                 </div>
             </section>
 
             <!-- Estimate Detail Section -->
-            <section id="estimate-detail" class="hidden">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="prompt">$</span> estimate-details
-                        <span class="estimate-id"></span>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="detail-grid">
-                            <!-- Summary Card -->
-                            <div class="detail-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Summary
-                                </div>
-                                <div class="card-content" id="estimateSummary">
-                                    <div class="summary-row">
-                                        <span class="label">Status:</span>
-                                        <span class="value status-badge" id="estimateStatus"></span>
-                                    </div>
-                                    <div class="summary-row">
-                                        <span class="label">Submitted:</span>
-                                        <span class="value" id="estimateDate"></span>
-                                    </div>
-                                    <div class="summary-row">
-                                        <span class="label">Total Amount:</span>
-                                        <span class="value" id="estimateTotal"></span>
-                                    </div>
-                                    <div class="summary-row">
-                                        <span class="label">AI Confidence:</span>
-                                        <span class="value" id="aiConfidence"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Labor Rates Card -->
-                            <div class="detail-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Labor Rates
-                                </div>
-                                <div class="card-content" id="laborRates">
-                                    <table class="terminal-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Rate</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="laborRatesBody">
-                                            <!-- Dynamically populated -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Parts Card -->
-                            <div class="detail-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Parts List
-                                </div>
-                                <div class="card-content" id="partsList">
-                                    <table class="terminal-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Part Number</th>
-                                                <th>Description</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="partsListBody">
-                                            <!-- Dynamically populated -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Operations Card -->
-                            <div class="detail-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Operations
-                                </div>
-                                <div class="card-content" id="operationsList">
-                                    <table class="terminal-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Operation</th>
-                                                <th>Hours</th>
-                                                <th>Rate</th>
-                                                <th>Total</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="operationsListBody">
-                                            <!-- Dynamically populated -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Actions Card -->
-                            <div class="detail-card">
-                                <div class="card-header">
-                                    <span class="prompt">> </span>Actions
-                                </div>
-                                <div class="card-content actions-grid">
-                                    <button onclick="DashboardController.handleEstimateAction(currentEstimateId, 'approve')" 
-                                            class="terminal-btn success">
-                                        [ Approve Estimate ]
-                                    </button>
-                                    <button onclick="DashboardController.handleEstimateAction(currentEstimateId, 'reject')" 
-                                            class="terminal-btn error">
-                                        [ Reject Estimate ]
-                                    </button>
-                                    <button onclick="DashboardController.handleNavigation('ai-analysis')" 
-                                            class="terminal-btn">
-                                        [ View AI Analysis ]
-                                    </button>
-                                    <button onclick="DashboardController.handleNavigation('compliance')" 
-                                            class="terminal-btn">
-                                        [ View Compliance ]
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <section id="detail" class="hidden">
+                <div class="card">
+                    <h2>Estimate Details</h2>
+                    <p>Examine a detailed view of your selected estimate — including summary information, labor rates, parts, operations, and actionable recommendations.</p>
+                    <div class="detail-grid">
+                        <!-- Various detail cards populated dynamically -->
                     </div>
                 </div>
             </section>
