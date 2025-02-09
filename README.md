@@ -1,15 +1,24 @@
 # ReSyncIQ Compliance Engine
 
-Project archived. For support or refund inquiries:
+⚠️ **PROJECT ARCHIVED** ⚠️
 
-Contact:
-Email: team@thecrashco.com
-Phone: 626-474-2012
+This project is no longer actively maintained. For support or refund inquiries:
 
+**Contact:**
+- Email: team@thecrashco.com
+- Phone: 626-474-2012
+
+**Address:**
 The Crash Co.
 2020 S Brea Canyon Rd
 Diamond Bar, CA 91765
 USA
+
+---
+
+## Historical Documentation
+
+The documentation below is preserved for reference purposes but is no longer actively maintained.
 
 ## Revolutionizing DRP Program Management with AI
 
@@ -451,20 +460,3 @@ AUTH0_ISSUER_BASE_URL=https://your-tenant.auth0.com
 AUTH0_CLIENT_ID=your-client-id
 AUTH0_CLIENT_SECRET=your-client-secret
 ```
-
-## Testing
-
-For testing purposes, mock data is available in `src/services/mockData.ts`.
-
-## Contact Us
-
-### Headquarters
-The Crash Co.  
-2020 S Brea Canyon Rd  
-Diamond Bar, CA 91765  
-USA
-
-### Support
-Email: team@thecrashco.com  
-Phone: 626-474-2012  
-Support Portal: https://support.thecrashco.com
