@@ -9,7 +9,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoading) {
-      router.replace(user ? '/dashboard' : '/login');
+      const basePath = process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '';
+      router.replace(user ? `${basePath}/dashboard` : `${basePath}/login`);
     }
   }, [user, isLoading, router]);
 

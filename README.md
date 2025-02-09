@@ -1,5 +1,16 @@
 # ReSyncIQ Compliance Engine
 
+Project archived. For support or refund inquiries:
+
+Contact:
+Email: team@thecrashco.com
+Phone: 626-474-2012
+
+The Crash Co.
+2020 S Brea Canyon Rd
+Diamond Bar, CA 91765
+USA
+
 ## Revolutionizing DRP Program Management with AI
 
 ### About the DRP Program and ARX
