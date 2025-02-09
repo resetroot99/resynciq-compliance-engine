@@ -1,32 +1,135 @@
+/* Terminal theme colors */
+:root {
+    --bg-primary: #002b36;
+    --bg-secondary: #073642;
+    --text-primary: #839496;
+    --text-secondary: #93a1a1;
+    --accent: #268bd2;
+    --success: #859900;
+    --warning: #b58900;
+    --error: #dc322f;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
+.terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.prompt {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.terminal-section {
+    border: 1px solid var(--bg-secondary);
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.terminal-section h2 {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.terminal-output {
+    padding-left: 1rem;
+}
+
+.success {
+    color: var(--success);
+}
+
+.step {
+    color: var(--text-secondary);
+    margin: 0.5rem 0;
+}
+
+.feature {
+    color: var(--text-primary);
+    margin: 0.5rem 0;
+}
+
+.terminal-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--accent);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s;
+}
+
+.terminal-btn:hover {
+    background-color: var(--accent);
+    color: var(--bg-primary);
+}
+
+.terminal-btn.large {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+
+/* Modal styling */
+.modal-content.terminal-style {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--accent);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.input-group input {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-secondary);
+    padding: 0.5rem;
+    font-family: 'Courier New', monospace;
+}
+
+.terminal-note {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
 header {
-    background-color: #2b7bba;
-    color: white;
-    padding: 20px;
+    background-color: #073642;
+    color: #839496;
+    padding: 10px 20px;
 }
 
 header button {
-    padding: 10px 20px;
-    background-color: white;
-    color: #2b7bba;
-    border: none;
+    padding: 6px 12px;
+    background-color: #002b36;
+    color: #839496;
+    border: 1px solid #586e75;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .product-overview, .features {
-    margin: 30px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 15px;
+    background-color: #002b36;
+    border: 1px solid #073642;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .features ul {
@@ -35,8 +138,8 @@ header button {
 }
 
 .features li {
-    padding: 10px;
-    font-size: 18px;
+    padding: 5px;
+    font-size: 12px;
 }
 
 .modal {
@@ -46,15 +149,17 @@ header button {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 43, 54, 0.8);
 }
 
 .modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
+    background-color: #002b36;
+    margin: 20% auto;
+    padding: 15px;
     width: 300px;
-    border-radius: 10px;
+    border-radius: 4px;
+    border: 1px solid #073642;
+    color: #839496;
 }
 
 .dashboard {

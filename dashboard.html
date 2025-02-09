@@ -5,39 +5,341 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComplianceIQ Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
-<body>
-    <header>
-        <h1>ComplianceIQ Dashboard</h1>
-        <p>Welcome to your AI-powered estimate review center</p>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <div class="terminal-header">
+            <span class="prompt">$</span>
+            <h1>ComplianceIQ</h1>
+            <span class="session-info">session: ${username} | status: active</span>
+        </div>
+        <div class="user-info">
+            <button onclick="logout()" class="terminal-btn">[ Logout ]</button>
+        </div>
     </header>
 
-    <!-- Dashboard Layout -->
-    <div class="dashboard">
-        <aside class="sidebar">
-            <h2>Menu</h2>
-            <ul>
-                <li>📂 Estimate Upload</li>
-                <li>📊 AI-Generated Recommendations</li>
-                <li>✅ Compliance & Approval Status</li>
-                <li>🚀 Coming Soon: API Integration</li>
-            </ul>
+    <div class="dashboard-container">
+        <aside class="terminal-sidebar">
+            <nav>
+                <div class="nav-header">$ menu</div>
+                <ul>
+                    <li class="active">
+                        <span class="prompt">></span>
+                        <a href="#upload">estimate-upload</a>
+                    </li>
+                    <li>
+                        <span class="prompt">></span>
+                        <a href="#recommendations">ai-recommendations</a>
+                    </li>
+                    <li>
+                        <span class="prompt">></span>
+                        <a href="#compliance">compliance-status</a>
+                    </li>
+                    <li>
+                        <span class="prompt">></span>
+                        <a href="#queue">review-queue</a>
+                    </li>
+                    <li>
+                        <span class="prompt">></span>
+                        <a href="#estimate-detail">estimate-detail</a>
+                    </li>
+                    <li class="coming-soon">
+                        <span class="prompt">~</span>
+                        <a href="#api">api-integration</a>
+                    </li>
+                </ul>
+            </nav>
         </aside>
 
-        <main class="main-content">
-            <h2>Estimate Upload (PDF / EMS)</h2>
-            <input type="file" id="estimateUpload">
-            <p>Upload a PDF or EMS file for AI review.</p>
+        <main class="terminal-content">
+            <!-- Upload Section -->
+            <section id="upload" class="active-section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> upload-estimate
+                    </div>
+                    <div class="terminal-body">
+                        <div class="dropzone" id="dropZone">
+                            <div class="terminal-prompt">
+                                <span class="prompt">></span> Drop PDF/EMS files here
+                            </div>
+                            <div class="terminal-or">or</div>
+                            <input type="file" id="fileInput" accept=".pdf,.ems" hidden>
+                            <button onclick="document.getElementById('fileInput').click()" class="terminal-btn">
+                                [ Choose File ]
+                            </button>
+                        </div>
+                        <div id="uploadStatus" class="terminal-output"></div>
+                    </div>
+                </div>
+            </section>
 
-            <h2>AI-Powered Recommendations</h2>
-            <p>AI scans uploaded estimates and suggests corrections based on historical data.</p>
+            <!-- AI Recommendations Section -->
+            <section id="recommendations" class="hidden">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> ai-analysis
+                    </div>
+                    <div class="recommendations-container">
+                        <!-- AI recommendations will be dynamically added here -->
+                    </div>
+                </div>
+            </section>
 
-            <h2>Compliance & Approval Status</h2>
-            <p>AI predicts approval likelihood and highlights compliance issues.</p>
+            <!-- AI Analysis Section -->
+            <section id="ai-analysis" class="hidden">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> ai-analysis-details
+                    </div>
+                    <div class="terminal-body">
+                        <div class="analysis-grid">
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Labor Rate Analysis
+                                </div>
+                                <div class="analysis-content" id="laborAnalysis">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Parts Validation
+                                </div>
+                                <div class="analysis-content" id="partsAnalysis">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
 
-            <h2>🚀 Coming Soon: Direct CCC ONE Integration</h2>
-            <p>Future updates will allow seamless API integration for real-time estimate fetching.</p>
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Operations Review
+                                </div>
+                                <div class="analysis-content" id="operationsAnalysis">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Approval Prediction
+                                </div>
+                                <div class="analysis-content" id="approvalPrediction">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Compliance Section -->
+            <section id="compliance" class="hidden">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> compliance-check
+                    </div>
+                    <div class="terminal-body">
+                        <div class="compliance-grid">
+                            <div class="compliance-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Insurance Guidelines
+                                    <span class="status" id="insuranceStatus"></span>
+                                </div>
+                                <div class="compliance-content" id="insuranceChecks">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+
+                            <div class="compliance-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>OEM Standards
+                                    <span class="status" id="oemStatus"></span>
+                                </div>
+                                <div class="compliance-content" id="oemChecks">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Queue Section -->
+            <section id="queue" class="hidden">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> review-queue
+                    </div>
+                    <div class="terminal-body">
+                        <div class="queue-filters">
+                            <select id="queueFilter" class="terminal-select">
+                                <option value="all">All Estimates</option>
+                                <option value="pending">Pending Review</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <input type="text" id="searchQueue" class="terminal-input" placeholder="Search estimates...">
+                        </div>
+                        <div id="queueList" class="queue-list">
+                            <!-- Queue items will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estimate Detail Section -->
+            <section id="estimate-detail" class="hidden">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="prompt">$</span> estimate-details
+                        <span class="estimate-id"></span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="detail-grid">
+                            <!-- Summary Card -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Summary
+                                </div>
+                                <div class="card-content" id="estimateSummary">
+                                    <div class="summary-row">
+                                        <span class="label">Status:</span>
+                                        <span class="value status-badge" id="estimateStatus"></span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="label">Submitted:</span>
+                                        <span class="value" id="estimateDate"></span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="label">Total Amount:</span>
+                                        <span class="value" id="estimateTotal"></span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="label">AI Confidence:</span>
+                                        <span class="value" id="aiConfidence"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Labor Rates Card -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Labor Rates
+                                </div>
+                                <div class="card-content" id="laborRates">
+                                    <table class="terminal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Rate</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="laborRatesBody">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Parts Card -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Parts List
+                                </div>
+                                <div class="card-content" id="partsList">
+                                    <table class="terminal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Part Number</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="partsListBody">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Operations Card -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Operations
+                                </div>
+                                <div class="card-content" id="operationsList">
+                                    <table class="terminal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Operation</th>
+                                                <th>Hours</th>
+                                                <th>Rate</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="operationsListBody">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Actions Card -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <span class="prompt">> </span>Actions
+                                </div>
+                                <div class="card-content actions-grid">
+                                    <button onclick="DashboardController.handleEstimateAction(currentEstimateId, 'approve')" 
+                                            class="terminal-btn success">
+                                        [ Approve Estimate ]
+                                    </button>
+                                    <button onclick="DashboardController.handleEstimateAction(currentEstimateId, 'reject')" 
+                                            class="terminal-btn error">
+                                        [ Reject Estimate ]
+                                    </button>
+                                    <button onclick="DashboardController.handleNavigation('ai-analysis')" 
+                                            class="terminal-btn">
+                                        [ View AI Analysis ]
+                                    </button>
+                                    <button onclick="DashboardController.handleNavigation('compliance')" 
+                                            class="terminal-btn">
+                                        [ View Compliance ]
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
+
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="error-handler.js"></script>
+    <script src="validation-service.js"></script>
+    <script src="ocr-service.js"></script>
+    <script src="predictive-model.js"></script>
+    <script src="compliance-service.js"></script>
+    <script src="auto-correction-impl.js"></script>
+    <script src="estimate-processor.js"></script>
+    <script src="ui-state.js"></script>
+    <script src="queue-service.js"></script>
+    <script src="learning-feedback-service.js"></script>
+    <script src="real-time-validation.js"></script>
+    <script src="services.js"></script>
+    <script src="feedback.js"></script>
+    <script src="template-service.js"></script>
+    <script src="estimate-detail-service.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="estimate-workflow.js"></script>
+    <script src="dashboard-controller.js"></script>
 </body>
 </html> 

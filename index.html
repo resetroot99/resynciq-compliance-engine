@@ -3,53 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComplianceIQ – AI-Powered Estimate Review</title>
+    <title>ComplianceIQ – AI-Powered Insurance Estimate Review</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
-        <h1>ComplianceIQ</h1>
-        <p>AI-Powered Estimate Review & Compliance Automation</p>
-        <button onclick="showLogin()">Login</button>
+        <div class="terminal-header">
+            <span class="prompt">$</span>
+            <h1>ComplianceIQ</h1>
+        </div>
+        <p class="tagline">Faster, Smarter, Automated Compliance & Approval Predictions</p>
+        <button onclick="showLogin()" class="terminal-btn">[ Login ]</button>
     </header>
 
-    <!-- Product Overview Section -->
-    <section class="product-overview">
-        <h2>Revolutionizing Estimate Review & Approval</h2>
-        <p>ComplianceIQ automates the insurance estimate review process with AI-driven recommendations and real-time compliance validation.</p>
-    </section>
+    <main>
+        <section class="terminal-section">
+            <h2>$ what-it-does</h2>
+            <div class="terminal-output">
+                <p class="success">✓ Automates insurance estimate review process</p>
+                <p class="success">✓ Uses AI to predict approvals and suggest corrections</p>
+                <p class="success">✓ Ensures compliance with insurer and OEM guidelines</p>
+            </div>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <h2>Key Features</h2>
-        <ul>
-            <li>✅ AI-Powered Estimate Review</li>
-            <li>✅ Auto-Correction & Compliance Validation</li>
-            <li>✅ Predictive Approval Modeling</li>
-            <li>✅ Manual PDF & EMS Upload</li>
-            <li>✅ Web-Based Reviewer Dashboard</li>
-        </ul>
+        <section class="terminal-section">
+            <h2>$ target-users</h2>
+            <div class="terminal-output">
+                <p>> Insurance companies streamlining approvals</p>
+                <p>> Auto repair shops accelerating claims</p>
+                <p>> Adjusters reducing manual revisions</p>
+            </div>
+        </section>
 
-        <h2>Coming Soon Features</h2>
-        <ul>
-            <li>🚀 CCC ONE API Integration for Real-Time Estimate Fetching</li>
-            <li>🚀 Automatic Insurance & OEM Compliance Sync</li>
-            <li>🚀 Seamless Estimate Auto-Updates</li>
-        </ul>
-    </section>
+        <section class="terminal-section">
+            <h2>$ workflow</h2>
+            <div class="terminal-output">
+                <p class="step">1. Upload estimate -> AI scan</p>
+                <p class="step">2. Generate recommendations -> Predict approval</p>
+                <p class="step">3. Apply auto-corrections -> Verify compliance</p>
+                <p class="step">4. Submit with confidence -> Fast approval</p>
+            </div>
+        </section>
 
-    <!-- Login Modal -->
+        <section class="terminal-section">
+            <h2>$ key-features</h2>
+            <div class="terminal-output">
+                <p class="feature">AI-driven tailored recommendations</p>
+                <p class="feature">Auto-corrections from approval history</p>
+                <p class="feature">Real-time compliance verification</p>
+                <p class="feature">Adaptive learning system</p>
+                <p class="feature">CCC ONE API integration (coming soon)</p>
+            </div>
+        </section>
+
+        <section class="terminal-section cta">
+            <h2>$ get-started</h2>
+            <div class="terminal-output">
+                <p class="highlight">AI-Powered Accuracy for Every Estimate</p>
+                <button onclick="showLogin()" class="terminal-btn large">[ Start Free Trial ]</button>
+            </div>
+        </section>
+    </main>
+
     <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2>Login to ComplianceIQ</h2>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="login()">Login</button>
-            <p>Trial Mode Available</p>
+        <div class="modal-content terminal-style">
+            <h2>$ login</h2>
+            <div class="input-group">
+                <span class="prompt">></span>
+                <input type="text" id="username" placeholder="username">
+            </div>
+            <div class="input-group">
+                <span class="prompt">></span>
+                <input type="password" id="password" placeholder="password">
+            </div>
+            <button onclick="login()" class="terminal-btn">[ Submit ]</button>
+            <p class="terminal-note">Trial Mode: Use 'demo' / 'demo123'</p>
         </div>
     </div>
 
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 
