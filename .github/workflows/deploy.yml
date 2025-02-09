@@ -10,34 +10,36 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build and Export
-      run: |
-        npm run build
-        npm run export
-      env:
-        NEXT_PUBLIC_BASE_PATH: '/resynciq-compliance-engine'
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: '/resynciq-compliance-engine'
 
-    - name: Prepare deployment
-      run: |
-        touch out/.nojekyll
-        echo "resynciq-compliance-engine.thecrashco.com" > out/CNAME
+      - name: Configure GitHub Pages
+        run: |
+          touch out/.nojekyll
+          cp -r out/* .
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push origin main
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./out
-        force_orphan: true 
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: out
+          branch: gh-pages
+          clean: true 
