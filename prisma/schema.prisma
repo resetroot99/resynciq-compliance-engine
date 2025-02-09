@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String     @id @default(cuid())
+  auth0Id    String     @unique
+  email      String     @unique
+  name       String?
+  role       UserRole   @default(ESTIMATOR)
+  companyId  String?
+  company    Company?   @relation(fields: [companyId], references: [id])
+  estimates  Estimate[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Company {
+  id              String    @id @default(cuid())
+  name            String
+  type            CompanyType
+  subscriptionTier String    @default("FREE")
+  users           User[]
+  estimates       Estimate[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Estimate {
+  id          String           @id @default(cuid())
+  status      EstimateStatus
+  fileUrl     String
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  companyId   String
+  company     Company          @relation(fields: [companyId], references: [id])
+  vehicleInfo VehicleInfo?
+  compliance  ComplianceCheck?
+  aiAnalysis  Json?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model VehicleInfo {
+  id         String   @id @default(cuid())
+  make       String
+  model      String
+  year       Int
+  vin        String
+  estimateId String   @unique
+  estimate   Estimate @relation(fields: [estimateId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ComplianceCheck {
+  id         String   @id @default(cuid())
+  score      Float
+  issues     Json?
+  estimateId String   @unique
+  estimate   Estimate @relation(fields: [estimateId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ComplianceRule {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  category    String
+  severity    Severity
+  parameters  Json     // Rule-specific parameters
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  ESTIMATOR
+  AUDITOR
+}
+
+enum CompanyType {
+  BODY_SHOP
+  INSURANCE
+  FLEET
+  INDEPENDENT
+}
+
+enum EstimateStatus {
+  UPLOADED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum Severity {
+  INFO
+  WARNING
+  ERROR
+} 

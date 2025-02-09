@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media print {
+  /* Hide screen-only elements */
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print\\:block {
+    display: block !important;
+  }
+
+  /* Reset background colors and shadows */
+  * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure proper page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  /* Adjust font sizes for print */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 18pt;
+  }
+
+  h2 {
+    font-size: 16pt;
+  }
+
+  /* Ensure tables span full width */
+  table {
+    width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Show URLs for links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+} 

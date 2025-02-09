@@ -24,4 +24,27 @@ export interface ServiceResponse<T> {
     success: boolean;
     data?: T;
     error?: string;
+}
+
+export interface Estimate {
+  id: string;
+  status: 'uploaded' | 'processing' | 'processed' | 'failed';
+  uploadedAt: string;
+  aiAnalysis?: {
+    damageDetected: boolean;
+    damageLocations: string[];
+    severityScore: number;
+    recommendedRepairs: string[];
+  };
+}
+
+export interface ComplianceResult {
+  compliant: boolean;
+  score: number;
+  issues: Array<{
+    title: string;
+    description: string;
+    severity: 'warning' | 'error';
+  }>;
+  validatedAt: string;
 } 

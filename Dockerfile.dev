@@ -1,0 +1,26 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install dependencies
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev
+
+# Install app dependencies
+COPY package*.json ./
+RUN npm ci
+
+# Copy app source
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Start the app
+CMD ["npm", "run", "dev"] 
