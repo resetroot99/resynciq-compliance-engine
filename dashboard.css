@@ -994,4 +994,104 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-lg);
+}
+
+/* Dashboard Layout */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-sidebar {
+    width: 280px;
+    background: var(--white);
+    border-right: 1px solid var(--gray-200);
+    padding: var(--spacing-4);
+}
+
+.dashboard-main {
+    flex: 1;
+    background: var(--gray-50);
+}
+
+.dashboard-header {
+    background: var(--white);
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Navigation */
+.nav-menu {
+    margin-top: var(--spacing-6);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--gray-600);
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: var(--spacing-1);
+}
+
+.nav-item:hover {
+    background: var(--gray-50);
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Content Area */
+.content-area {
+    padding: var(--spacing-6);
+}
+
+/* Upload Zone */
+.upload-zone {
+    border: 2px dashed var(--gray-300);
+    border-radius: 8px;
+    padding: var(--spacing-8);
+    text-align: center;
+    background: var(--white);
+    transition: all 0.2s;
+}
+
+.upload-zone:hover {
+    border-color: var(--primary);
+    background: var(--gray-50);
+}
+
+/* Queue List */
+.queue-list {
+    display: grid;
+    gap: var(--spacing-4);
+}
+
+.queue-item {
+    background: var(--white);
+    border-radius: 8px;
+    padding: var(--spacing-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Analysis Cards */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-4);
+}
+
+.analysis-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: var(--spacing-4);
 } 
