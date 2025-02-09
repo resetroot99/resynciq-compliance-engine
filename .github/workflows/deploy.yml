@@ -28,25 +28,18 @@ jobs:
         npm run build
         npm run export
       env:
-        NEXT_PUBLIC_BASE_PATH: /resynciq-compliance-engine
+        NEXT_PUBLIC_BASE_PATH: ''
 
-    - name: Verify root index.html
+    - name: Prepare deployment
       run: |
-        if [ ! -f "out/index.html" ]; then
-          echo "Error: index.html not found in root directory"
-          exit 1
-        fi
-        echo "Root index.html verified"
-        ls -la out/
-
-    - name: Add .nojekyll file
-      run: |
+        cp out/index.html out/404.html
         touch out/.nojekyll
-        cp out/404.html out/404/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./out
-        force_orphan: true 
+        publish_branch: main
+        force_orphan: false
+        keep_files: true 
