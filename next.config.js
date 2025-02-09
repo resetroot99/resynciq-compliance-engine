@@ -12,12 +12,12 @@ const nextConfig = {
   },
   basePath: process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '',
   trailingSlash: true,
-  // Add rewrites for GitHub Pages
+  // Add custom 404 page handling
   async rewrites() {
     return [
       {
-        source: '/:any*',
-        destination: '/_error',
+        source: '/:path*',
+        destination: '/404',
       },
     ];
   },

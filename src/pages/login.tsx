@@ -8,8 +8,9 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && user) {
-      router.push('/dashboard');
+    if (!isLoading) {
+      const redirectPath = router.query.redirect || '/dashboard';
+      router.replace(user ? redirectPath : `/api/auth/login?redirect=${redirectPath}`);
     }
   }, [user, isLoading, router]);
 
@@ -21,7 +22,7 @@ export default function Login() {
         <div>
           <img 
             className="mx-auto h-12 w-auto" 
-            src="https://raw.githubusercontent.com/resetroot99/resynciq-compliance-engine/main/public/logo.svg" 
+            src="/logo.svg" 
             alt="ReSyncIQ"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
