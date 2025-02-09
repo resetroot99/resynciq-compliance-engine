@@ -3,10 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReSyncIQ Compliance Engine</title>
-    <meta http-equiv="refresh" content="0;url=/resynciq-compliance-engine/out/index.html">
+    <title>ComplianceIQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Check AI service status
+        async function checkAIService() {
+            try {
+                const response = await fetch('/ai-service/status');
+                if (!response.ok) {
+                    console.warn('AI service is not available');
+                }
+            } catch (error) {
+                console.error('AI service check failed:', error);
+            }
+        }
+        checkAIService();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const systemOverview = {
+                description: 'ComplianceIQ revolutionizes insurance estimate review and compliance by integrating AI-driven automation with CCC ONE APIs. Our web-based Reviewer Dashboard offers automated corrections, real-time recommendations, and predictive approval insights, significantly reducing manual effort and improving accuracy.',
+                keyFeatures: [
+                    'AI-Powered Estimate Review',
+                    'Auto-Correction & Compliance',
+                    'Predictive Approval Modeling',
+                    'Real-Time Recommendations',
+                    'Seamless CCC ONE Integration'
+                ]
+            };
+
+            const overviewElement = document.createElement('div');
+            overviewElement.innerHTML = `
+                <h2>System Overview</h2>
+                <p>${systemOverview.description}</p>
+                <h3>Key Features</h3>
+                <ul>
+                    ${systemOverview.keyFeatures.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+            `;
+            document.body.prepend(overviewElement);
+        });
+    </script>
 </head>
 <body>
-    <p style="text-align: center; margin-top: 20px;">Redirecting to application...</p>
+    <div id="root"></div>
+    <script src="bundle.js"></script>
 </body>
 </html> 

@@ -3,66 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReSyncIQ Compliance Engine</title>
+    <title>Collision Repair Compliance App</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="product.css">
+    <script>
+      // Handle GitHub Pages 404 redirect
+      (function() {
+        const redirect = new URLSearchParams(window.location.search).get('p');
+        if (redirect) {
+          window.history.replaceState(null, null, '/' + redirect);
+        }
+      })();
+    </script>
 </head>
 <body>
-    <div class="landing-page">
-        <header class="site-header">
-            <div class="container">
-                <div class="header-content">
-                    <h1>ReSyncIQ Compliance Engine</h1>
-                    <nav>
-                        <a href="#features">Features</a>
-                        <a href="#how-it-works">How It Works</a>
-                        <a href="login.html" class="btn btn-primary">Sign In</a>
-                    </nav>
-                </div>
-            </div>
-        </header>
-
-        <main>
-            <section class="hero">
-                <div class="container">
-                    <h2>Automated DRP Compliance</h2>
-                    <p class="lead">AI-powered estimate review for collision repair facilities</p>
-                    <div class="cta-buttons">
-                        <a href="login.html" class="btn btn-primary">Get Started</a>
-                        <a href="#demo" class="btn btn-secondary">Watch Demo</a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="features" class="features-section">
-                <div class="container">
-                    <h2>Key Features</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <i class="fas fa-robot"></i>
-                            <h3>AI Analysis</h3>
-                            <p>Advanced OCR and machine learning to analyze labor rates, parts pricing, and operations</p>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-check-circle"></i>
-                            <h3>DRP Compliance</h3>
-                            <p>Automated verification against insurance guidelines and program requirements</p>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-chart-line"></i>
-                            <h3>Performance Metrics</h3>
-                            <p>Track compliance scores and program performance over time</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="site-footer">
-            <div class="container">
-                <p>Built by Ali J. - Collision Industry Expert</p>
-            </div>
-        </footer>
-    </div>
+    <div id="root"></div>
+    <script src="bundle.js"></script>
 </body>
 </html> 

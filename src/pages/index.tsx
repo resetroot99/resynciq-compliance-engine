@@ -1,22 +1,32 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { Layout } from '../components/Layout';
+import { Dashboard } from '../components/Dashboard';
+import { EstimateForm } from '../components/EstimateForm';
+import { Notifications } from '../components/Notifications';
 import { useUser } from '@auth0/nextjs-auth0';
-import { LoadingScreen } from '../components/common/LoadingScreen';
 
 export default function Home() {
-  const router = useRouter();
   const { user, isLoading } = useUser();
 
-  useEffect(() => {
-    if (!isLoading) {
-      const basePath = process.env.NODE_ENV === 'production' ? '/resynciq-compliance-engine' : '';
-      router.replace(user ? `${basePath}/dashboard` : `${basePath}/login`);
-    }
-  }, [user, isLoading, router]);
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!user) {
+    return (
+      <Layout>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold">Welcome to ReSyncIQ</h1>
+          <p className="mt-4">Please log in to continue</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <LoadingScreen />
-    </div>
+    <Layout>
+      <Dashboard userId={user.sub} />
+      <div className="mt-8">
+        <EstimateForm />
+      </div>
+      <Notifications />
+    </Layout>
   );
 } 

@@ -427,3 +427,57 @@ AUTH0_ISSUER_BASE_URL=https://your-tenant.auth0.com
 AUTH0_CLIENT_ID=your-client-id
 AUTH0_CLIENT_SECRET=your-client-secret
 ```
+
+# ComplianceIQ
+
+## Overview
+ComplianceIQ is an **AI-powered insurance estimate review platform** that automates and streamlines the process of reviewing and validating collision repair estimates. Unlike existing solutions like CCC ONE or Mitchell, ComplianceIQ doesn't just **flag errors**—it **proactively fixes them** using **AI-powered auto-corrections, compliance enforcement, and approval forecasting**.
+
+---
+
+## **System Overview**
+This project revolutionizes insurance estimate review and compliance by integrating AI-driven automation with CCC ONE APIs. Our web-based Reviewer Dashboard offers automated corrections, real-time recommendations, and predictive approval insights, significantly reducing manual effort and improving accuracy.
+
+### **Key Features**
+✅ **AI-Powered Estimate Review** – Automatically detects errors and suggests corrections.  
+✅ **Auto-Correction & Compliance** – Ensures insurer and OEM compliance before submission.  
+✅ **Predictive Approval Modeling** – Uses AI to forecast approval likelihood based on past data.  
+✅ **Real-Time Recommendations** – Displays tailored suggestions directly in the dashboard.  
+✅ **Seamless CCC ONE Integration** – Uses CCC APIs to pull, correct, and update estimates.  
+
+---
+
+## **Core Principles**
+1️⃣ **Proactive, Not Reactive** – AI doesn't just flag issues; it **auto-corrects them for approval**.  
+2️⃣ **Insurer-Specific Customization** – The system must **adapt to different insurer rules dynamically**.  
+3️⃣ **First-Time Right** – The goal is to **reduce rejections & resubmissions** with **predictive approval modeling**.  
+4️⃣ **Seamless Automation** – Minimize human effort by making **AI-driven auto-corrections intuitive**.  
+5️⃣ **User-Centric** – The interface must be **clear, professional, and frictionless for adjusters & repair shops**.  
+
+---
+
+## **Getting Started**
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+3. **Run Tests**:
+   ```bash
+   npm test
+   ```
+
+---
+
+## **Documentation**
+- [API Documentation](docs/api.md)
+- [Insurer Rules](docs/insurer-rules.md)
+- [AI Models](docs/ai-models.md)
+
+---
+
+## **License**
+This project is licensed under the [MIT License](LICENSE).

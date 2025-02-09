@@ -1,0 +1,5 @@
+mkdir -p src/{components,pages,services,utils,styles}
+mkdir -p prisma
+mkdir -p public/{images,screenshots}
+mkdir -p tests
+mkdir -p scripts 

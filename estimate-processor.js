@@ -1,4 +1,69 @@
+import { aiService } from '../services/ai/AIService';
+import { insurerService } from '../services/insurer/InsurerService';
+import config from '../config';
+
 class EstimateProcessor {
+    async processEstimate(estimateData, insurerId) {
+        try {
+            // 1. Initial AI Analysis
+            const analysis = await aiService.analyzeEstimate(estimateData);
+
+            // 2. Apply Insurer-Specific Rules
+            const insurerRules = await insurerService.getRules(insurerId);
+            const complianceResult = await this.validateCompliance(estimateData, insurerRules);
+
+            // 3. Auto-Corrections
+            let correctedEstimate = estimateData;
+            if (analysis.confidence >= config.aiService.autoCorrectThreshold) {
+                correctedEstimate = await this.applyAutoCorrections(estimateData, insurerRules);
+            }
+
+            // 4. Predictive Approval Modeling
+            const approvalPrediction = await aiService.predictApproval(correctedEstimate, insurerId);
+
+            // 5. Generate Recommendations
+            const recommendations = await this.generateRecommendations(
+                correctedEstimate,
+                complianceResult,
+                approvalPrediction
+            );
+
+            return {
+                originalEstimate: estimateData,
+                correctedEstimate,
+                analysis,
+                complianceResult,
+                approvalPrediction,
+                recommendations,
+                autoCorrections: this.getAppliedCorrections(estimateData, correctedEstimate)
+            };
+        } catch (error) {
+            console.error('Estimate processing failed:', error);
+            throw error;
+        }
+    }
+
+    async applyAutoCorrections(estimate, rules) {
+        const corrections = await aiService.generateCorrections(estimate, rules);
+        return corrections.reduce((correctedEstimate, correction) => {
+            return this.applyCorrection(correctedEstimate, correction);
+        }, estimate);
+    }
+
+    async generateRecommendations(estimate, compliance, prediction) {
+        const recommendations = [];
+
+        // Add high-impact recommendations first
+        if (prediction.approvalProbability < config.insurers[estimate.insurerId].approvalThreshold) {
+            recommendations.push(...await this.getApprovalOptimizations(estimate));
+        }
+
+        // Add compliance-based recommendations
+        recommendations.push(...this.getComplianceRecommendations(compliance));
+
+        return recommendations.sort((a, b) => b.impact - a.impact);
+    }
+
     static async processNewEstimate(file) {
         try {
             // Validate file
@@ -75,4 +140,35 @@ class EstimateProcessor {
             throw error;
         }
     }
-} 
+
+    async processEstimateWithAI(estimateData) {
+        try {
+            // Step 1: Process the estimate with AI
+            const processedEstimate = await aiService.processEstimate(estimateData);
+
+            // Step 2: Get compliance check
+            const compliance = await aiService.getComplianceCheck(processedEstimate.id);
+
+            // Step 3: Get approval prediction
+            const prediction = await aiService.getApprovalPrediction(processedEstimate.id);
+
+            // Step 4: Apply auto-corrections
+            const correctedEstimate = await aiService.applyAutoCorrections(processedEstimate.id);
+
+            // Step 5: Get review recommendations
+            const recommendations = await aiService.getReviewRecommendations(processedEstimate.id);
+
+            return {
+                ...processedEstimate,
+                compliance,
+                prediction,
+                corrections: correctedEstimate,
+                recommendations
+            };
+        } catch (error) {
+            // ... error handling ...
+        }
+    }
+}
+
+export const estimateProcessor = new EstimateProcessor(); 

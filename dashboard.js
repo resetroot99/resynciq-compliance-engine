@@ -587,4 +587,73 @@ async function submitAIFeedback() {
     } catch (error) {
         ErrorHandler.showError(error);
     }
-} 
+}
+
+const { aiService } = require('./src/services/ai/AIService');
+
+class DashboardService {
+  // ... existing code ...
+
+  async getAIPoweredInsights(userId) {
+    try {
+      const insights = await aiService.getDashboardInsights(userId);
+      return insights;
+    } catch (error) {
+      throw new Error(`AI-powered insights retrieval failed: ${error.message}`);
+    }
+  }
+
+  async getContextualSuggestions(estimateId) {
+    try {
+      const suggestions = await aiService.getContextualSuggestions(estimateId);
+      return suggestions;
+    } catch (error) {
+      throw new Error(`Contextual suggestions retrieval failed: ${error.message}`);
+    }
+  }
+
+  async getEstimateInsights(estimateId, insurerId) {
+    const estimate = await this.getEstimate(estimateId);
+    const processedEstimate = await estimateProcessor.processEstimate(estimate, insurerId);
+
+    return {
+      estimateId,
+      insurerId,
+      status: this.getEstimateStatus(processedEstimate),
+      approvalProbability: processedEstimate.approvalPrediction.probability,
+      complianceScore: processedEstimate.complianceResult.score,
+      autoCorrections: processedEstimate.autoCorrections,
+      recommendations: this.prioritizeRecommendations(processedEstimate.recommendations),
+      riskFactors: this.identifyRiskFactors(processedEstimate),
+      savingsOpportunities: this.calculateSavings(processedEstimate)
+    };
+  }
+
+  prioritizeRecommendations(recommendations) {
+    return recommendations.map(rec => ({
+      ...rec,
+      priority: this.calculatePriority(rec),
+      impact: this.calculateImpact(rec),
+      effort: this.calculateEffort(rec)
+    })).sort((a, b) => b.priority - a.priority);
+  }
+
+  calculatePriority(recommendation) {
+    return (recommendation.impact * 0.7) + (1 - recommendation.effort * 0.3);
+  }
+
+  identifyRiskFactors(processedEstimate) {
+    const risks = [];
+    if (processedEstimate.approvalPrediction.probability < 0.8) {
+      risks.push({
+        type: 'APPROVAL_RISK',
+        severity: 'HIGH',
+        details: processedEstimate.approvalPrediction.riskFactors
+      });
+    }
+    // Add other risk factors...
+    return risks;
+  }
+}
+
+export const dashboardService = new DashboardService(); 

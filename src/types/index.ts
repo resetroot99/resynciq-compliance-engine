@@ -26,16 +26,45 @@ export interface ServiceResponse<T> {
     error?: string;
 }
 
+export interface User {
+  id: string;
+  auth0Id: string;
+  email: string;
+  name?: string;
+  role: 'ADMIN' | 'MANAGER' | 'ESTIMATOR' | 'AUDITOR';
+  companyId?: string;
+}
+
 export interface Estimate {
   id: string;
-  status: 'uploaded' | 'processing' | 'processed' | 'failed';
-  uploadedAt: string;
-  aiAnalysis?: {
-    damageDetected: boolean;
-    damageLocations: string[];
-    severityScore: number;
-    recommendedRepairs: string[];
-  };
+  status: 'UPLOADED' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'PENDING_REVIEW';
+  compliance: number;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  companyId: string;
+  vehicleInfo?: VehicleInfo;
+  issues?: ComplianceIssue[];
+}
+
+export interface VehicleInfo {
+  make: string;
+  model: string;
+  year: number;
+  vin: string;
+}
+
+export interface ComplianceIssue {
+  id: string;
+  message: string;
+  severity: 'info' | 'warning' | 'error';
+  ruleId: string;
+}
+
+export interface DashboardMetrics {
+  totalEstimates: number;
+  complianceRate: number;
+  pendingReviews: number;
 }
 
 export interface ComplianceResult {

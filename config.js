@@ -42,39 +42,90 @@ const FEATURES = {
 };
 
 const config = {
-    production: {
-        API_URL: 'https://api.resynciq.com/v1',
-        SOCKET_URL: 'wss://ws.resynciq.com',
-        CDN_URL: 'https://cdn.resynciq.com',
-        FEATURES: {
-            AI_ANALYSIS: true,
-            REAL_TIME_UPDATES: true,
-            CCC_INTEGRATION: true,
-            LEARNING_FEEDBACK: true
+    insurers: {
+        GEICO: {
+            rules: {
+                ARX: {
+                    version: '2024.1',
+                    autoCorrections: true,
+                    laborRates: {
+                        body: 52,
+                        paint: 52,
+                        frame: 65,
+                        mechanical: 125
+                    },
+                    blendOperations: {
+                        required: true,
+                        maxPanels: 3
+                    },
+                    partTypes: {
+                        preferredAftermarket: ['CAPA', 'NSF'],
+                        oemExceptions: ['safety', 'structural']
+                    },
+                    recommendations: {
+                        enabled: true,
+                        priority: ['safety', 'compliance', 'cost']
+                    }
+                }
+            },
+            approvalThreshold: 0.85
+        },
+        // Add other insurers...
+    },
+
+    aiService: {
+        modelVersions: {
+            estimateAnalysis: 'v2.1',
+            approvalPrediction: 'v1.8',
+            autoCorrection: 'v2.0'
+        },
+        confidenceThreshold: 0.90,
+        autoCorrectThreshold: 0.95,
+        learningRate: 0.01,
+        feedbackLoop: {
+            enabled: true,
+            interval: 3600 // 1 hour
         }
     },
-    staging: {
-        API_URL: 'https://staging-api.resynciq.com/v1',
-        SOCKET_URL: 'wss://staging-ws.resynciq.com',
-        CDN_URL: 'https://staging-cdn.resynciq.com',
-        FEATURES: {
-            AI_ANALYSIS: true,
-            REAL_TIME_UPDATES: true,
-            CCC_INTEGRATION: true,
-            LEARNING_FEEDBACK: true
+
+    security: {
+        rateLimit: {
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100 // limit each IP to 100 requests
+        },
+        encryption: {
+            algorithm: 'aes-256-gcm',
+            keyLength: 32
         }
     },
-    development: {
-        API_URL: 'http://localhost:3000/v1',
-        SOCKET_URL: 'ws://localhost:3001',
-        CDN_URL: 'http://localhost:3002',
-        FEATURES: {
-            AI_ANALYSIS: true,
-            REAL_TIME_UPDATES: true,
-            CCC_INTEGRATION: false,
-            LEARNING_FEEDBACK: true
-        }
-    }
+
+    features: {
+        autoCorrection: true,
+        predictiveModeling: true,
+        multiInsurerValidation: true,
+        realTimeValidation: true,
+        proactiveRecommendations: true,
+        dynamicRuleAdaptation: true
+    },
+
+    systemOverview: {
+        description: 'ComplianceIQ revolutionizes insurance estimate review and compliance by integrating AI-driven automation with CCC ONE APIs. Our web-based Reviewer Dashboard offers automated corrections, real-time recommendations, and predictive approval insights, significantly reducing manual effort and improving accuracy.',
+        keyFeatures: [
+            'AI-Powered Estimate Review',
+            'Auto-Correction & Compliance',
+            'Predictive Approval Modeling',
+            'Real-Time Recommendations',
+            'Seamless CCC ONE Integration'
+        ]
+    },
+
+    corePrinciples: [
+        'Proactive, Not Reactive',
+        'Insurer-Specific Customization',
+        'First-Time Right',
+        'Seamless Automation',
+        'User-Centric'
+    ]
 };
 
-export default config[process.env.NODE_ENV || 'development']; 
+export default config; 

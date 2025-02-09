@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.metric-card {
+  @apply bg-white p-6 rounded-lg shadow-lg;
+}
+
+.metric-title {
+  @apply text-gray-500 text-sm mb-2;
+}
+
+.metric-value {
+  @apply text-3xl font-bold text-gray-900;
+} 

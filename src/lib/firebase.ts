@@ -1,29 +1,17 @@
-import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getStorage } from 'firebase-admin/storage';
+import { initializeApp } from 'firebase/app';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { config } from '../config';
 
-if (!getApps().length) {
-  initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    }),
-    storageBucket: `${process.env.FIREBASE_PROJECT_ID}.appspot.com`,
-  });
-}
+const firebaseConfig = {
+  projectId: config.firebase.projectId,
+  storageBucket: config.firebase.storageBucket,
+};
 
-export const storage = getStorage();
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
-export async function uploadToFirebase(file: Buffer, path: string): Promise<string> {
-  const bucket = storage.bucket();
-  const blob = bucket.file(path);
-  
-  await blob.save(file, {
-    contentType: 'application/pdf',
-    metadata: {
-      firebaseStorageDownloadTokens: Date.now().toString(),
-    },
-  });
-
-  return blob.publicUrl();
+export async function uploadToFirebase(file: File): Promise<string> {
+  const storageRef = ref(storage, `estimates/${Date.now()}-${file.name}`);
+  await uploadBytes(storageRef, file);
+  return getDownloadURL(storageRef);
 } 

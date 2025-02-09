@@ -3,6 +3,7 @@ import { getSession } from '@auth0/nextjs-auth0';
 import prisma from '../../../lib/prisma';
 import { uploadToFirebase } from '../../../lib/firebase';
 import { processEstimate } from '../../../services/estimateService';
+import { estimateProcessor } from '../../../services/estimate-processor';
 
 export const config = {
   api: {
@@ -38,30 +39,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.json(estimates);
 
       case 'POST':
-        const user = await prisma.user.findUnique({
-          where: { auth0Id: session.user.sub },
-          include: { company: true }
-        });
-
-        if (!user) {
-          return res.status(404).json({ error: 'User not found' });
-        }
-
-        const fileUrl = await uploadToFirebase(req.body.file);
-
-        const estimate = await prisma.estimate.create({
-          data: {
-            status: 'UPLOADED',
-            fileUrl,
-            userId: user.id,
-            companyId: user.companyId!
-          }
-        });
-
-        // Process estimate asynchronously
-        processEstimate(estimate.id).catch(console.error);
-
-        return res.status(201).json(estimate);
+        const result = await estimateProcessor.processEstimate(req.body);
+        res.status(200).json(result);
+        break;
 
       default:
         res.setHeader('Allow', ['GET', 'POST']);

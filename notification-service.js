@@ -1,4 +1,51 @@
+import { aiService } from '../ai/AIService';
+import { insurerService } from '../insurer/InsurerService';
+import { securityService } from '../security/SecurityService';
+
 class NotificationService {
+    constructor() {
+        this.encryptionKey = process.env.NOTIFICATION_ENCRYPTION_KEY;
+    }
+
+    async sendNotification(userId, type, message) {
+        try {
+            const encryptedMessage = await this.encryptMessage(message);
+            await this.validateNotification(userId, type);
+            
+            return await this.deliverNotification({
+                userId,
+                type,
+                message: encryptedMessage,
+                timestamp: new Date().toISOString()
+            });
+        } catch (error) {
+            console.error('Notification failed:', error);
+            throw error;
+        }
+    }
+
+    async sendAIUpdateNotification(userId, updateType) {
+        const message = await aiService.getUpdateMessage(updateType);
+        await this.sendNotification(userId, 'AI_UPDATE', message);
+    }
+
+    async sendInsurerRuleUpdateNotification(userId, insurerId) {
+        const message = await insurerService.getRuleUpdateMessage(insurerId);
+        await this.sendNotification(userId, 'RULE_UPDATE', message);
+    }
+
+    async encryptMessage(message) {
+        return await securityService.encrypt(message, this.encryptionKey);
+    }
+
+    async validateNotification(userId, type) {
+        // Implement notification validation
+    }
+
+    async deliverNotification(notification) {
+        // Implement notification delivery
+    }
+
     static show(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
@@ -42,4 +89,15 @@ class NotificationService {
     static info(message) {
         this.show(message, 'info');
     }
-} 
+
+    async sendModelImprovementNotification(userId) {
+        try {
+            const message = await aiService.getImprovementMessage();
+            await this.sendNotification(userId, 'MODEL_IMPROVEMENT', message);
+        } catch (error) {
+            throw new Error(`Model improvement notification failed: ${error.message}`);
+        }
+    }
+}
+
+export const notificationService = new NotificationService(); 

@@ -2,30 +2,22 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    # User-Centric: Provides a clear, professional interface for adjusters & repair shops
+    build: .
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/resynciq
-      - REDIS_URL=redis://redis:6379
+      NODE_ENV: production
+      DATABASE_URL: postgresql://user:password@db:5432/collision_repair
     depends_on:
       - db
-      - redis
 
   db:
-    image: postgres:14-alpine
+    image: postgres:13
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=resynciq
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: collision_repair
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -41,6 +33,41 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  ai-service:
+    # Proactive, Not Reactive: Automatically detects and fixes errors
+    build: ./ai-service
+    ports:
+      - "5000:5000"
+    environment:
+      - AI_MODEL_PATH=/models
+      - AI_MODEL_VERSION=${AI_MODEL_VERSION}
+      - INSURER_RULES_PATH=/rules
+    volumes:
+      - ./ai-models:/models
+      - ./ai-cache:/cache
+      - ./insurer-rules:/rules
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  rules-service:
+    # Insurer-Specific Customization: Dynamically adapts to different insurer rules
+    build: ./rules-service
+    ports:
+      - "5001:5001"
+    environment:
+      - RULES_UPDATE_INTERVAL=3600
+      - RULES_SOURCE=dynamic
+    volumes:
+      - ./insurer-rules:/rules
 
 volumes:
   postgres_data:
