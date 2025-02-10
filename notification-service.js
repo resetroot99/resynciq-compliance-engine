@@ -1,6 +1,7 @@
 import { aiService } from '../ai/AIService';
 import { insurerService } from '../insurer/InsurerService';
 import { securityService } from '../security/SecurityService';
+import { AuthService } from '../security/AuthService';
 
 class NotificationService {
     constructor() {
@@ -39,11 +40,33 @@ class NotificationService {
     }
 
     async validateNotification(userId, type) {
-        // Implement notification validation
+        if (!userId || !type) {
+            throw new Error('Invalid notification parameters');
+        }
+        
+        const validTypes = ['INFO', 'WARNING', 'ERROR', 'AI_UPDATE', 'RULE_UPDATE'];
+        if (!validTypes.includes(type)) {
+            throw new Error(`Invalid notification type: ${type}`);
+        }
     }
 
     async deliverNotification(notification) {
-        // Implement notification delivery
+        try {
+            const response = await fetch('/api/notifications', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AuthService.getToken()}`
+                },
+                body: JSON.stringify(notification)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to deliver notification');
+            }
+        } catch (error) {
+            throw new Error(`Notification delivery failed: ${error.message}`);
+        }
     }
 
     static show(message, type = 'info') {
@@ -97,6 +120,88 @@ class NotificationService {
         } catch (error) {
             throw new Error(`Model improvement notification failed: ${error.message}`);
         }
+    }
+
+    static async sendSystemUpdateNotification(userId) {
+        const message = 'System update available. Please restart your application.';
+        await this.sendNotification(userId, 'SYSTEM_UPDATE', message);
+    }
+
+    async deliverWithRetry(notification, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                return await this.deliverNotification(notification);
+            } catch (error) {
+                if (i === retries - 1) throw error;
+                await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+            }
+        }
+    }
+
+    static async sendSecurityAlertNotification(userId) {
+        const message = 'Security alert: Unusual activity detected.';
+        await this.sendNotification(userId, 'SECURITY_ALERT', message);
+    }
+
+    static async sendThrottledNotification(userId, type, message, delay = 1000) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return this.sendNotification(userId, type, message);
+    }
+
+    static async updateNotificationPreferences(userId, preferences) {
+        try {
+            const response = await fetch('/api/notifications/preferences', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AuthService.getToken()}`
+                },
+                body: JSON.stringify({
+                    userId,
+                    preferences
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to update notification preferences');
+            }
+        } catch (error) {
+            throw new Error(`Preference update failed: ${error.message}`);
+        }
+    }
+
+    static async sendBatchNotifications(notifications) {
+        const batchSize = 10;
+        for (let i = 0; i < notifications.length; i += batchSize) {
+            const batch = notifications.slice(i, i + batchSize);
+            await Promise.all(batch.map(notification => 
+                this.sendNotification(
+                    notification.userId,
+                    notification.type,
+                    notification.message
+                )
+            ));
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    static getTemplate(type) {
+        const templates = {
+            APPROVAL: 'Your estimate has been approved',
+            REJECTION: 'Your estimate requires changes',
+            UPDATE: 'New system update available'
+        };
+        return templates[type] || 'Notification';
+    }
+
+    static async trackDelivery(notificationId) {
+        await fetch(`/api/notifications/${notificationId}/track`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AuthService.getToken()}`
+            }
+        });
     }
 }
 

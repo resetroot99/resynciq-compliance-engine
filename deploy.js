@@ -2,6 +2,8 @@ const { execSync } = require('child_process');
 const { modelService } = require('./src/services/ai/ModelService');
 const { insurerService } = require('./src/services/insurer/InsurerService');
 const crypto = require('crypto');
+const fetch = require('node-fetch');
+const fs = require('fs');
 
 const deploy = {
     async preDeployChecks() {
@@ -66,15 +68,50 @@ const deploy = {
     },
 
     async verifySecrets() {
-        // Verify environment variables and secrets
+        const requiredSecrets = [
+            'DATABASE_URL',
+            'AUTH0_SECRET',
+            'AI_API_KEY'
+        ];
+        
+        for (const secret of requiredSecrets) {
+            if (!process.env[secret]) {
+                throw new Error(`Missing required secret: ${secret}`);
+            }
+        }
     },
 
     async verifyDeployment() {
-        // Verify deployment status
+        const endpoints = [
+            '/health',
+            '/api/validate',
+            '/api/compliance'
+        ];
+        
+        for (const endpoint of endpoints) {
+            const response = await fetch(`${process.env.APP_URL}${endpoint}`);
+            if (!response.ok) {
+                throw new Error(`Deployment verification failed at ${endpoint}`);
+            }
+        }
     },
 
     async checkSecuritySignatures() {
-        // Verify integrity of security signatures
+        const requiredFiles = [
+            'package-lock.json',
+            'prisma/schema.prisma',
+            'docker-compose.yml'
+        ];
+        
+        for (const file of requiredFiles) {
+            const hash = crypto.createHash('sha256')
+                .update(fs.readFileSync(file))
+                .digest('hex');
+            
+            if (hash !== process.env[`${file.toUpperCase()}_HASH`]) {
+                throw new Error(`Security signature mismatch for ${file}`);
+            }
+        }
     },
 
     async runTests() {
@@ -82,11 +119,38 @@ const deploy = {
     },
 
     async checkDependencies() {
-        // Check dependencies
+        const requiredDeps = ['node', 'npm', 'docker'];
+        for (const dep of requiredDeps) {
+            try {
+                execSync(`${dep} --version`);
+            } catch (error) {
+                throw new Error(`Missing dependency: ${dep}`);
+            }
+        }
     },
 
     async verifyEnvironment() {
-        // Verify environment
+        const requiredVersions = {
+            node: '>=18.0.0',
+            npm: '>=8.0.0'
+        };
+        
+        // Add version checks
+    },
+
+    async rollback(version) {
+        console.log('Initiating rollback...');
+        await this.stopServices();
+        await this.checkoutVersion(version);
+        await this.deploy();
+    },
+
+    async stopServices() {
+        // Implement stopping services
+    },
+
+    async checkoutVersion(version) {
+        // Implement checking out a specific version
     }
 };
 

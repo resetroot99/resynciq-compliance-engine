@@ -1,3 +1,9 @@
+const { execSync } = require('child_process');
+const { modelService } = require('../app/services/ai/ModelService');
+const { insurerService } = require('../app/services/insurer/InsurerService');
+const crypto = require('crypto');
+const fetch = require('node-fetch');
+const fs = require('fs');
 const { deploymentService } = require('../src/services/deployment/DeploymentService');
 const { loggingService } = require('../src/services/logging/LoggingService');
 
@@ -19,4 +25,5 @@ async function deploy() {
   }
 }
 
+// Run deployment
 deploy(); 

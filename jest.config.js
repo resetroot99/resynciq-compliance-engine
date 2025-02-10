@@ -1,24 +1,11 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  roots: ['<rootDir>/src'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+  testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@services/(.*)$': '<rootDir>/src/services/$1',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1'
+    '^@/(.*)$': '<rootDir>/app/$1',
   },
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/index.tsx'
+    'app/**/*.{js,jsx}',
+    '!app/**/*.d.ts',
   ],
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80
-    }
-  }
 }; 

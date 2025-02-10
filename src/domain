@@ -1,0 +1,3 @@
+├── estimate/                 # Estimate domain models
+├── user/                     # User domain models
+└── company/                  # Company domain models 

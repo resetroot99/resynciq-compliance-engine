@@ -4,12 +4,15 @@ import logger from '../lib/logger';
 import * as pdfjsLib from 'pdfjs-dist';
 import { createWorker } from 'tesseract.js';
 import type { Buffer } from 'node:buffer';
+import { OpenAI } from 'openai';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
+
+const openaiOpenAI = new OpenAI(process.env.OPENAI_API_KEY);
 
 interface AIAnalysisResult {
   vehicleInfo: {
@@ -79,7 +82,7 @@ export async function analyzeEstimate(fileUrl: string): Promise<AIAnalysisResult
   }
 }
 
-async function extractTextFromPDF(buffer: Buffer): Promise<string> {
+export const extractTextFromPDF = async (buffer: Buffer): Promise<string> => {
   try {
     const data = new Uint8Array(buffer);
     const loadingTask = pdfjsLib.getDocument({ data });
@@ -95,12 +98,12 @@ async function extractTextFromPDF(buffer: Buffer): Promise<string> {
     
     return fullText;
   } catch (error) {
-    logger.error({ error }, 'PDF text extraction failed');
-    return '';
+    console.error('Failed to extract text from PDF:', error);
+    throw new Error('Failed to extract text from PDF');
   }
-}
+};
 
-async function performOCR(buffer: Buffer): Promise<string> {
+export const performOCR = async (buffer: Buffer): Promise<string> => {
   try {
     const worker = await createWorker();
     await worker.loadLanguage('eng');
@@ -111,10 +114,10 @@ async function performOCR(buffer: Buffer): Promise<string> {
     
     return text;
   } catch (error) {
-    logger.error({ error }, 'OCR processing failed');
-    return '';
+    console.error('Failed to perform OCR:', error);
+    throw new Error('Failed to perform OCR');
   }
-}
+};
 
 async function validateAnalysis(
   initialAnalysis: AIAnalysisResult,
@@ -151,4 +154,91 @@ async function correctVIN(text: string): Promise<string> {
 function validateCosts(costs: any): boolean {
   // Cost validation logic
   return true;
-} 
+}
+
+export const autoCorrectEstimate = async (estimate: any) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert in auto repair estimates. Correct the following estimate to ensure compliance and accuracy.',
+        },
+        {
+          role: 'user',
+          content: `Correct this estimate: ${JSON.stringify(estimate)}`,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 500,
+    });
+
+    const correctedEstimate = JSON.parse(response.choices[0].message?.content || '{}');
+    return correctedEstimate;
+  } catch (error) {
+    console.error('AI auto-correction failed:', error);
+    throw new Error('Failed to auto-correct estimate');
+  }
+};
+
+export const predictApproval = async (estimate: any) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert in auto repair estimates. Predict the likelihood of approval for the following estimate.',
+        },
+        {
+          role: 'user',
+          content: `Predict approval for this estimate: ${JSON.stringify(estimate)}`,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 100,
+    });
+
+    const approvalPrediction = response.choices[0].message?.content || 'Unknown';
+    return approvalPrediction;
+  } catch (error) {
+    console.error('AI approval prediction failed:', error);
+    throw new Error('Failed to predict approval');
+  }
+};
+
+export const parseEstimateFromPDF = async (file: Buffer): Promise<any> => {
+  try {
+    // Extract text from PDF
+    let text = await extractTextFromPDF(file);
+
+    // If text extraction fails, try OCR
+    if (!text || text.trim().length === 0) {
+      text = await performOCR(file);
+    }
+
+    // Use AI to parse the text into a structured estimate
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert in auto repair estimates. Parse the following estimate into a structured JSON format.',
+        },
+        {
+          role: 'user',
+          content: `Parse this estimate: ${text}`,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
+
+    const estimate = JSON.parse(response.choices[0].message?.content || '{}');
+    return estimate;
+  } catch (error) {
+    console.error('Failed to parse estimate from PDF:', error);
+    throw new Error('Failed to parse estimate from PDF');
+  }
+}; 

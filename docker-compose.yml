@@ -11,15 +11,38 @@ services:
       DATABASE_URL: postgresql://user:password@db:5432/collision_repair
     depends_on:
       - db
+      - redis
+      - ai-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2G'
+        reservations:
+          cpus: '1'
+          memory: '1G'
 
   db:
-    image: postgres:13
+    image: postgres:14
+    container_name: postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: collision_repair
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: complianceiq
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
@@ -27,12 +50,27 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
 
   mailhog:
     image: mailhog/mailhog
     ports:
       - "1025:1025"
       - "8025:8025"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8025"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   ai-service:
     # Proactive, Not Reactive: Automatically detects and fixes errors
@@ -41,9 +79,13 @@ services:
       - "5000:5000"
     environment:
       - AI_MODEL_PATH=/models
-      - AI_MODEL_VERSION=${AI_MODEL_VERSION}
     volumes:
       - ./ai-models:/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   rules-service:
     # Insurer-Specific Customization: Dynamically adapts to different insurer rules
@@ -54,7 +96,44 @@ services:
       - RULES_UPDATE_INTERVAL=3600
     volumes:
       - ./insurer-rules:/rules
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   postgres_data:
-  redis_data: 
+  redis_data:
+  grafana_data: 

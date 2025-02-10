@@ -10,6 +10,10 @@ import { apiClientService } from './services/api/ApiClientService';
 import { telemetryService } from './services/telemetry/TelemetryService';
 import { performanceMonitor } from './services/performance/PerformanceMonitorService';
 import { featureFlagService } from './services/feature-flags/FeatureFlagService';
+import express from 'express';
+import { json } from 'body-parser';
+import { estimateRouter } from './routes/estimate';
+import { complianceRouter } from './routes/compliance';
 
 class Application {
   private isShuttingDown = false;
@@ -186,4 +190,20 @@ app.initialize()
       context: { error: error.message }
     });
     process.exit(1);
-  }); 
+  });
+
+const expressApp = express();
+expressApp.use(json());
+
+// AI service status endpoint
+expressApp.get('/ai-service/status', (req, res) => {
+  res.status(200).json({ status: 'AI service is running' });
+});
+
+expressApp.use('/api/estimate', estimateRouter);
+expressApp.use('/api/compliance', complianceRouter);
+
+const PORT = process.env.PORT || 3000;
+expressApp.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+}); 

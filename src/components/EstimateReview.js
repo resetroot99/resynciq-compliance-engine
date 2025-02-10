@@ -1,21 +1,24 @@
-function EstimateReview({ estimate }) {
+import React, { useState } from 'react';
+
+const EstimateReview = () => {
+  const [estimate, setEstimate] = useState(null);
+
+  const handleSubmit = async () => {
+    const response = await fetch('/api/estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(estimate),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
-    <div className="estimate-review">
+    <div>
       <h2>Estimate Review</h2>
-      <div className="compliance-status">
-        <span>Compliance: {estimate.complianceScore}%</span>
-        <span>Approval Probability: {estimate.approvalProbability}%</span>
-      </div>
-      <div className="recommendations">
-        <h3>Recommendations</h3>
-        {estimate.recommendations.map((rec, i) => (
-          <div key={i} className="recommendation">
-            <p>{rec.message}</p>
-          </div>
-        ))}
-      </div>
+      <button onClick={handleSubmit}>Submit Estimate</button>
     </div>
   );
-}
+};
 
 export default EstimateReview; 

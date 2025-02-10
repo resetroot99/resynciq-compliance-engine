@@ -1,11 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { LoggingService } from '../logging/LoggingService';
+import { loggingService } from '../logging/LoggingService';
 import { TelemetryService } from '../telemetry/TelemetryService';
 
 export class DatabaseService {
   private static instance: DatabaseService;
   private prisma: PrismaClient;
-  private logger = LoggingService.getInstance();
   private telemetry = TelemetryService.getInstance();
 
   private constructor() {
@@ -19,30 +18,52 @@ export class DatabaseService {
     return DatabaseService.instance;
   }
 
-  async getEstimate(id: string) {
+  async createEstimate(data: any) {
+    try {
+      this.telemetry.trackEvent('database_estimate_save_started', { estimateId: data.id });
+
+      const estimate = await this.prisma.estimate.create({
+        data,
+        include: {
+          user: true,
+          company: true,
+          complianceChecks: true,
+        },
+      });
+
+      this.telemetry.trackEvent('database_estimate_save_completed', { estimateId: data.id });
+
+      return estimate;
+    } catch (error) {
+      loggingService.error('Failed to create estimate', { error });
+
+      this.telemetry.trackEvent('database_estimate_save_failed', { 
+        estimateId: data.id,
+        errorMessage: error.message
+      });
+
+      throw error;
+    }
+  }
+
+  async getEstimate(id: number) {
     try {
       this.telemetry.trackEvent('database_estimate_retrieval_started', { estimateId: id });
 
       const estimate = await this.prisma.estimate.findUnique({
         where: { id },
         include: {
-          vehicle: true,
-          photos: true,
-          lineItems: true,
-          supplements: true,
-          validationResults: true
-        }
+          user: true,
+          company: true,
+          complianceChecks: true,
+        },
       });
 
       this.telemetry.trackEvent('database_estimate_retrieval_completed', { estimateId: id });
 
       return estimate;
     } catch (error) {
-      this.logger.log({
-        level: 'ERROR',
-        message: 'Failed to retrieve estimate from database',
-        context: { estimateId: id, error: error.message }
-      });
+      loggingService.error('Failed to fetch estimate', { error });
 
       this.telemetry.trackEvent('database_estimate_retrieval_failed', { 
         estimateId: id,
@@ -53,43 +74,35 @@ export class DatabaseService {
     }
   }
 
-  async saveEstimate(data: any) {
+  async updateEstimate(id: number, data: any) {
     try {
-      this.telemetry.trackEvent('database_estimate_save_started', { estimateId: data.id });
-
-      const estimate = await this.prisma.estimate.create({
-        data: {
-          ...data,
-          vehicle: { create: data.vehicle },
-          photos: { createMany: { data: data.photos } },
-          lineItems: { createMany: { data: data.lineItems } },
-          supplements: { createMany: { data: data.supplements } },
-          validationResults: { create: data.validationResults }
-        },
+      const estimate = await this.prisma.estimate.update({
+        where: { id },
+        data,
         include: {
-          vehicle: true,
-          photos: true,
-          lineItems: true,
-          supplements: true,
-          validationResults: true
-        }
+          user: true,
+          company: true,
+          complianceChecks: true,
+        },
       });
-
-      this.telemetry.trackEvent('database_estimate_save_completed', { estimateId: data.id });
-
       return estimate;
     } catch (error) {
-      this.logger.log({
-        level: 'ERROR',
-        message: 'Failed to save estimate to database',
-        context: { estimateId: data.id, error: error.message }
-      });
+      loggingService.error('Failed to update estimate', { error });
+      throw error;
+    }
+  }
 
-      this.telemetry.trackEvent('database_estimate_save_failed', { 
-        estimateId: data.id,
-        errorMessage: error.message
+  async createComplianceCheck(data: any) {
+    try {
+      const check = await this.prisma.complianceCheck.create({
+        data,
+        include: {
+          estimate: true,
+        },
       });
-
+      return check;
+    } catch (error) {
+      loggingService.error('Failed to create compliance check', { error });
       throw error;
     }
   }
@@ -114,14 +127,31 @@ export class DatabaseService {
 
       return estimates;
     } catch (error) {
-      this.logger.log({
-        level: 'ERROR',
-        message: 'Failed to retrieve estimates from database',
-        context: { userId, error: error.message }
-      });
+      loggingService.error('Failed to retrieve estimates from database', { userId, error: error.message });
 
       this.telemetry.trackEvent('database_estimates_retrieval_failed', { 
         userId,
+        errorMessage: error.message
+      });
+
+      throw error;
+    }
+  }
+
+  async deleteEstimate(id: number) {
+    try {
+      this.telemetry.trackEvent('database_estimate_deletion_started', { estimateId: id });
+
+      await this.prisma.estimate.delete({
+        where: { id },
+      });
+
+      this.telemetry.trackEvent('database_estimate_deletion_completed', { estimateId: id });
+    } catch (error) {
+      loggingService.error('Failed to delete estimate', { error });
+
+      this.telemetry.trackEvent('database_estimate_deletion_failed', { 
+        estimateId: id,
         errorMessage: error.message
       });
 

@@ -1,0 +1,3 @@
+├── database/                 # Database service
+├── ai/                       # AI service
+└── storage/                  # File storage service 

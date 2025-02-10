@@ -8,30 +8,61 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  name      String?
+  role      UserRole   @default(ESTIMATOR)
+  companyId Int
+  company   Company    @relation(fields: [companyId], references: [id])
   estimates Estimate[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  @@unique([email, companyId])
+}
+
+model Company {
+  id               Int         @id @default(autoincrement())
+  name             String
+  type             CompanyType
+  subscriptionTier String      @default("FREE")
+  users            User[]
+  estimates        Estimate[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  @@unique([name, type])
 }
 
 model Estimate {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  status      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  vehicle     Vehicle?
-  photos      Photo[]
-  lineItems   LineItem[]
-  supplements Supplement[]
+  id               Int               @id @default(autoincrement())
+  operations       Json
+  parts            Json
+  userId           Int
+  user             User              @relation(fields: [userId], references: [id])
+  companyId        Int
+  company          Company           @relation(fields: [companyId], references: [id])
+  status           EstimateStatus    @default(PENDING)
+  complianceScore  Float?
+  approvalScore    Float?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  complianceChecks ComplianceCheck[]
+  vehicles         Vehicle[]
+  photos           Photo[]
+  lineItems        LineItem[]
+  supplements      Supplement[]
+  vehicleInfo      VehicleInfo[]
+  @@index([status])
+  @@index([complianceScore])
+  @@index([approvalScore])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([userId, companyId])
 }
 
 model Vehicle {
-  id         String   @id @default(cuid())
-  estimateId String   @unique
+  id         Int      @id @default(autoincrement())
+  estimateId Int      @unique
   estimate   Estimate @relation(fields: [estimateId], references: [id])
   make       String
   model      String
@@ -40,63 +71,58 @@ model Vehicle {
 }
 
 model Photo {
-  id         String   @id @default(cuid())
-  estimateId String
+  id         Int      @id @default(autoincrement())
+  estimateId Int
   estimate   Estimate @relation(fields: [estimateId], references: [id])
   url        String
   createdAt  DateTime @default(now())
 }
 
 model LineItem {
-  id         String   @id @default(cuid())
-  estimateId String
-  estimate   Estimate @relation(fields: [estimateId], references: [id])
+  id          Int      @id @default(autoincrement())
+  estimateId  Int
+  estimate    Estimate @relation(fields: [estimateId], references: [id])
   description String
-  quantity   Int
-  unitPrice  Float
-  totalPrice Float
+  quantity    Int
+  unitPrice   Float
+  totalPrice  Float
 }
 
 model Supplement {
-  id         String   @id @default(cuid())
-  estimateId String
-  estimate   Estimate @relation(fields: [estimateId], references: [id])
+  id          Int      @id @default(autoincrement())
+  estimateId  Int
+  estimate    Estimate @relation(fields: [estimateId], references: [id])
   description String
-  amount     Float
-  createdAt  DateTime @default(now())
-}
-
-model Company {
-  id              String    @id @default(cuid())
-  name            String
-  type            CompanyType
-  subscriptionTier String    @default("FREE")
-  users           User[]
-  estimates       Estimate[]
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  amount      Float
+  createdAt   DateTime @default(now())
 }
 
 model VehicleInfo {
-  id         String   @id @default(cuid())
+  id         Int      @id @default(autoincrement())
   make       String
   model      String
   year       Int
   vin        String
-  estimateId String   @unique
+  estimateId Int      @unique
   estimate   Estimate @relation(fields: [estimateId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
 model ComplianceCheck {
-  id         String   @id @default(cuid())
+  id         Int      @id @default(autoincrement())
+  estimateId Int
+  estimate   Estimate @relation(fields: [estimateId], references: [id])
   score      Float
   issues     Json?
-  estimateId String   @unique
-  estimate   Estimate @relation(fields: [estimateId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  @@index([estimateId])
+  @@index([score])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([createdAt])
+  @@index([score, estimateId])
 }
 
 model ComplianceRule {
@@ -105,10 +131,53 @@ model ComplianceRule {
   description String
   category    String
   severity    Severity
-  parameters  Json     // Rule-specific parameters
+  parameters  Json // Rule-specific parameters
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  insurerId   Int?
+  insurer     Insurer?  @relation(fields: [insurerId], references: [id])
+}
+
+model AuditLog {
+    id        Int      @id @default(autoincrement())
+    action    String
+    userId    Int
+    user      User     @relation(fields: [userId], references: [id])
+    timestamp DateTime @default(now())
+    details   Json?
+}
+
+model Configuration {
+    id    Int    @id @default(autoincrement())
+    key   String @unique
+    value String
+}
+
+model RepairProcedure {
+    id          Int      @id @default(autoincrement())
+    estimateId  Int
+    estimate    Estimate @relation(fields: [estimateId], references: [id])
+    procedure   String
+    source      String   // OEM, I-CAR, ASE
+    details     Json
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    @@index([estimateId])
+}
+
+model NotificationPreference {
+    id        Int      @id @default(autoincrement())
+    userId    Int
+    user      User     @relation(fields: [userId], references: [id])
+    type      String
+    enabled   Boolean  @default(true)
+    channel   String   // email, push, sms
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@unique([userId, type])
+    @@index([userId, type])
+    @@index([channel, enabled])
 }
 
 enum UserRole {
@@ -126,14 +195,14 @@ enum CompanyType {
 }
 
 enum EstimateStatus {
-  UPLOADED
-  PROCESSING
-  COMPLETED
-  FAILED
+  PENDING
+  APPROVED
+  REJECTED
+  REVIEWING
 }
 
 enum Severity {
   INFO
   WARNING
   ERROR
-} 
+}

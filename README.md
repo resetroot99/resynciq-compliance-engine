@@ -1,4 +1,55 @@
-# 🚗 ReSyncIQ Compliance Engine
+# 🚀 ComplianceIQ - AI-Powered Compliance Engine
+
+## 📖 Project Description
+ComplianceIQ is an AI-powered compliance management system designed to streamline and automate compliance processes for insurance estimates. It provides real-time validation, predictive modeling, and automated corrections to ensure first-time approval of estimates.
+
+## 🌟 Key Features
+- Real-time estimate validation
+- AI-powered auto-corrections
+- Predictive approval modeling
+- Insurer-specific rule management
+- Comprehensive audit trails
+- Automated reporting
+
+## 🛠️ Installation
+
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 14+
+- Redis (optional for caching)
+- Docker and Docker Compose
+
+### Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/your-org/complianceiq.git
+cd complianceiq
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
+
+4. Start the development environment:
+```bash
+docker-compose up -d
+```
+
+5. Run database migrations:
+```bash
+npx prisma migrate dev
+```
+
+6. Start the development server:
+```bash
+npm run dev
+```
 
 ## 🌟 Revolutionizing DRP Program Management with AI
 
@@ -21,60 +72,49 @@ Experience ComplianceIQ in action with our [live demo](/demo.html). The demo sho
 
 ## 🚀 Quick Start
 
-### 📋 Prerequisites
+### Validate an Estimate
+```javascript
+const estimate = {
+  laborRates: [...],
+  parts: [...],
+  operations: [...]
+};
 
-- 🟢 Node.js 18+
-- 🐳 Docker and Docker Compose
-- 🐘 PostgreSQL 14+
-- 🔴 Redis (optional, for caching)
-
-### 🛠️ Development Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/resetroot99/resynciq-compliance-engine.git
-cd resynciq-compliance-engine
+const result = await ComplianceService.validateEstimate(estimate);
+console.log(result);
 ```
 
-2. Install dependencies:
-```bash
-npm install
+### Send Notification
+```javascript
+await NotificationService.sendNotification(
+  userId, 
+  'INFO', 
+  'Your estimate has been approved'
+);
 ```
 
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
+## 🚨 Troubleshooting
 
-4. Start the development environment:
-```bash
-docker-compose up -d
-```
+### Common Issues
+1. **Database connection failed**
+   - Verify DATABASE_URL in .env
+   - Ensure PostgreSQL is running
+   - Check docker-compose logs
 
-5. Run database migrations:
-```bash
-npm run prisma:migrate
-```
+2. **AI service not responding**
+   - Verify AI_API_KEY
+   - Check AI service logs
+   - Ensure models are properly loaded
 
-6. Start the development server:
-```bash
-npm run dev
-```
+3. **Validation errors**
+   - Check estimate format
+   - Verify insurer rules
+   - Review validation logs
 
-### 🚀 Production Deployment
-
-1. Build the application:
-```bash
-npm run build
-```
-
-2. Start the production server:
-```bash
-npm start
-```
+## 📚 API Documentation
+For detailed API documentation, visit: [API Docs](https://api.complianceiq.com/docs)
 
 ## 🤝 Contributing
-
 We welcome contributions! Please follow these steps:
 
 1. Fork the repository
@@ -84,14 +124,12 @@ We welcome contributions! Please follow these steps:
 5. Create a Pull Request
 
 ## 📜 License
-
-© 2024 ReSyncIQ. All rights reserved.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
-
-- 📚 Documentation: [ReSyncIQ Docs](https://docs.resynciq.com)
-- 📧 Email: support@resynciq.com
-- 🐛 Issues: [GitHub Issues](https://github.com/resetroot99/resynciq-compliance-engine/issues)
+For support, please contact:
+- Email: support@complianceiq.com
+- Issues: [GitHub Issues](https://github.com/your-org/complianceiq/issues)
 
 ## ✨ Key Features
 
@@ -421,6 +459,32 @@ AUTH0_CLIENT_SECRET=your-client-secret
 
 # ComplianceIQ
 
+## Project Structure
+- `src/api/`: API routes
+- `src/core/`: Core business logic
+- `src/domain/`: Domain models
+- `src/infrastructure/`: External services
+- `src/middleware/`: Custom middleware
+- `src/utils/`: Utility functions
+
+## Getting Started
+1. Clone the repository.
+2. Run `npm install`.
+3. Start the services: `docker-compose up -d`.
+4. Run migrations: `npx prisma migrate dev --name init`.
+5. Start the server: `npm run dev`.
+
+## Deployment
+1. Build the app: `npm run build`.
+2. Start the services: `npm run docker:up`.
+3. Run migrations: `npm run migrate`.
+4. Access the app at `http://localhost:3000`.
+
+## Monitoring & Logging
+- **Prometheus**: Metrics collection.
+- **Grafana**: Visualization of metrics.
+- **Winston**: Structured logging.
+
 ## Overview
 ComplianceIQ is an **AI-powered insurance estimate review platform** that automates and streamlines the process of reviewing and validating collision repair estimates. Unlike existing solutions like CCC ONE or Mitchell, ComplianceIQ doesn't just **flag errors**—it **proactively fixes them** using **AI-powered auto-corrections, compliance enforcement, and approval forecasting**.
 
@@ -528,3 +592,85 @@ ComplianceIO will be a **modern, cinematic, and minimalist compliance management
 #### **3. Mobile & Responsive Navigation**
 - **Compact Sidebar Toggle** *(Minimalistic UI that expands upon interaction)*
 - **Bottom Quick-Access Menu** *(For mobile-friendly compliance validation, reporting, and notifications)*
+
+# Missing Elements:
+- Project description
+- Installation instructions
+- Configuration requirements
+- Usage examples
+- Contribution guidelines
+- License information
+
+## 🤝 Contributing Guidelines
+
+### How to Contribute
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Create a Pull Request
+
+### Code Style
+- Follow ESLint rules
+- Use Prettier for formatting
+- Write meaningful commit messages
+
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+For support, please contact:
+- Email: support@complianceiq.com
+- Issues: [GitHub Issues](https://github.com/your-org/complianceiq/issues)
+
+## 🛠️ Configuration Requirements
+
+### Environment Variables
+- `DATABASE_URL`: PostgreSQL connection string
+- `AUTH0_SECRET`: Auth0 client secret
+- `AI_API_KEY`: API key for AI service
+- `REDIS_URL`: Redis connection URL (optional)
+
+## 💻 Usage Examples
+
+### Validate an Estimate
+```javascript
+const estimate = {
+  laborRates: [...],
+  parts: [...],
+  operations: [...]
+};
+
+const result = await ComplianceService.validateEstimate(estimate);
+console.log(result);
+```
+
+### Send Notification
+```javascript
+await NotificationService.sendNotification(
+  userId, 
+  'INFO', 
+  'Your estimate has been approved'
+);
+```
+
+## 🚨 Troubleshooting
+
+### Common Issues
+1. **Database connection failed**
+   - Verify DATABASE_URL in .env
+   - Ensure PostgreSQL is running
+   - Check docker-compose logs
+
+2. **AI service not responding**
+   - Verify AI_API_KEY
+   - Check AI service logs
+   - Ensure models are properly loaded
+
+3. **Validation errors**
+   - Check estimate format
+   - Verify insurer rules
+   - Review validation logs
+
+## 📚 API Documentation
+For detailed API documentation, visit: [API Docs](https://api.complianceiq.com/docs)
